@@ -35,8 +35,8 @@ let paths = ref([])
 let miheader = ref(null)
 onMounted(async () => {
   // router.push('/?page=about')
-  const { data } = await useFetch('/assets/headerlinks.json')
-  // const { data } = await useFetch('https://vkceyugu.cdn.bspapp.com/VKCEYUGU-b02b7f48-0227-438f-8c3a-3a5f94afa017/6b7d01eb-6611-4cf6-b052-b2312630cd3d.json')
+  // const { data } = await useFetch('/assets/headerlinks.json')
+  const { data } = await useFetch('https://vkceyugu.cdn.bspapp.com/VKCEYUGU-b02b7f48-0227-438f-8c3a-3a5f94afa017/6b7d01eb-6611-4cf6-b052-b2312630cd3d.json')
   data.value.forEach(item => {
     links.value.push(item.title)
     paths.value.push(item.path)
