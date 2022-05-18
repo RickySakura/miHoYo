@@ -1,0 +1,52 @@
+{
+  "name": "unenv",
+  "version": "0.4.6",
+  "description": "",
+  "repository": "unjs/unenv",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    },
+    "./runtime/mock/proxy-cjs": "./runtime/mock/proxy.cjs",
+    "./runtime/*": {
+      "require": "./runtime/*.cjs",
+      "import": "./runtime/*.mjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "runtime"
+  ],
+  "dependencies": {
+    "buffer": "^6.0.2",
+    "defu": "^6.0.0",
+    "events": "^3.2.0",
+    "inherits": "^2.0.4",
+    "mime": "^2.4.6",
+    "node-fetch": "^3.2.3",
+    "process": "^0.11.10",
+    "upath": "^2.0.1",
+    "util": "^0.12.4"
+  },
+  "devDependencies": {
+    "@nuxtjs/eslint-config-typescript": "latest",
+    "@types/node": "latest",
+    "@types/node-fetch": "latest",
+    "consola": "latest",
+    "eslint": "latest",
+    "standard-version": "latest",
+    "typescript": "latest",
+    "unbuild": "latest"
+  },
+  "packageManager": "pnpm@6.32.3",
+  "scripts": {
+    "build": "unbuild",
+    "lint": "eslint --ext ts .",
+    "release": "standard-version && pnpm publish && git push --follow-tags"
+  },
+  "readme": "# unenv\n\nUnenv is a framework agnostic system that allows converting JavaScript code to be platform agnostic and working in any environment including Browsers, Workers, Node.js or pure JavaScript runtime.\n\n## Install\n\n\n```bash\n# Using npm\nnpm i -D unenv\n\n# Using yarn\nyarn add --dev unenv\n```\n\n## Usage\n\nUsing `env` utility and builtin presets ( and [nodeless](./src/presets/nodeless.ts)), unenv will provide an abstract config that can be used in building pipelines ([rollup.js](https://rollupjs.org), [webpack](https://webpack.js.org), etc)\n\n```js\nimport { env, node, nodeless } from 'unenv'\n\nconst { alias, inject, polyfill, external } = env(...presets)\n```\n\n## Presets\n\n### `node`\n\nSuitable to convert universal libraries working in Node.js. ([preset]([node](./src/presets/node.ts)))\n\n- Add support for global [`fetch` API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)\n- Set Node.js built-ins as externals\n\n### `nodeless`\n\nUsing this preset, we can convert a code that is depending on Node.js to work anywhere else.\n\n#### Built-in Node.js modules\n\nModule | Status | Source\n-------|--------|---------------\n[node:assert](https://nodejs.org/api/assert.html) | Mocked | -\n[node:async_hooks](https://nodejs.org/api/async_hooks.html) | Mocked | -\n[node:buffer](https://nodejs.org/api/buffer.html) | Polyfilled | [npm:buffer](https://www.npmjs.com/package/buffer)\n[node:child_process](https://nodejs.org/api/child_process.html) | Mocked | -\n[node:cluster](https://nodejs.org/api/cluster.html) | Mocked | -\n[node:console](https://nodejs.org/api/console.html) | Mocked | -\n[node:constants](https://nodejs.org/api/constants.html) | Mocked | -\n[node:crypto](https://nodejs.org/api/crypto.html) | Mocked | -\n[node:dgram](https://nodejs.org/api/dgram.html) | Mocked | -\n[node:diagnostics_channel](https://nodejs.org/api/diagnostics_channel.html) | Mocked | -\n[node:dns](https://nodejs.org/api/dns.html) | Mocked | -\n[node:domain](https://nodejs.org/api/domain.html) | Mocked | -\n[node:events](https://nodejs.org/api/events.html) | Polyfilled | [npm:events](https://www.npmjs.com/package/events)\n[node:fs/promises](https://nodejs.org/api/fs/promises.html) | Mocked | -\n[node:fs](https://nodejs.org/api/fs.html) | Mocked | -\n[node:http2](https://nodejs.org/api/http2.html) | Mocked | -\n[node:http](https://nodejs.org/api/http.html) | Polyfilled | [unenv/runtime/http/request](./src/runtime/node/http)\n[node:https](https://nodejs.org/api/https.html) | Mocked | -\n[node:inspector](https://nodejs.org/api/inspector.html) | Mocked | -\n[node:module](https://nodejs.org/api/module.html) | Mocked | -\n[node:net](https://nodejs.org/api/net.html) | Polyfilled | [unenv/runtime/node/request](./src/runtime/node/net)\n[node:os](https://nodejs.org/api/os.html) | Mocked | -\n[node:path](https://nodejs.org/api/path.html) | Mocked | -\n[node:perf_hooks](https://nodejs.org/api/perf_hooks.html) | Mocked | -\n[node:process](https://nodejs.org/api/process.html) | Polyfilled | -\n[node:punycode](https://nodejs.org/api/punycode.html) | Mocked | -\n[node:querystring](https://nodejs.org/api/querystring.html) | Mocked | -\n[node:readline](https://nodejs.org/api/readline.html) | Mocked | -\n[node:repl](https://nodejs.org/api/repl.html) | Mocked | -\n[node:stream](https://nodejs.org/api/stream.html) | Polyfilled | [unenv/runtime/strean/request](./src/runtime/node/stream)\n[node:string_decoder](https://nodejs.org/api/string_decoder.html) | Mocked | -\n[node:sys](https://nodejs.org/api/sys.html) | Mocked | -\n[node:timers](https://nodejs.org/api/timers.html) | Mocked | -\n[node:tls](https://nodejs.org/api/tls.html) | Mocked | -\n[node:trace_events](https://nodejs.org/api/trace_events.html) | Mocked | -\n[node:tty](https://nodejs.org/api/tty.html) | Mocked | -\n[node:url](https://nodejs.org/api/url.html) | Polyfilled | [unenv/runtime/url/request](./src/runtime/node/url)\n[node:util](https://nodejs.org/api/util.html) | Polyfilled | [npm:util](https://www.npmjs.com/package/util)\n[node:v8](https://nodejs.org/api/v8.html) | Mocked | -\n[node:vm](https://nodejs.org/api/vm.html) | Mocked | -\n[node:wasi](https://nodejs.org/api/wasi.html) | Mocked | -\n[node:worker_threads](https://nodejs.org/api/worker_threads.html) | Mocked | -\n[node:zlib](https://nodejs.org/api/zlib.html) | Mocked | -\n[npm:etag](https://www.npmjs.com/package/etag) | Polyfilled | [unenv/runtime/npm:etag](./src/runtime/npm:etag)\n[npm:fsevents](https://www.npmjs.com/package/fsevents) | Polyfilled | [unenv/runtime/npm:fsevents](./src/runtime/npm:fsevents)\n[npm:mime-db](https://www.npmjs.com/package/mime-db) | Polyfilled | [unenv/runtime/npm:mime-db](./src/runtime/npm:mime-db)\n[npm:mime](https://www.npmjs.com/package/mime) | Polyfilled | [unenv/runtime/npm:mime](./src/runtime/npm:mime)\n[npm:node-fetch](https://www.npmjs.com/package/node-fetch) | Polyfilled | [unenv/runtime/npm:node-fetch](./src/runtime/npm:node-fetch)\n\n\n\n## Auto-mocking proxy\n\n```js\nimport MockProxy from 'unenv/runtime/mock/proxy'\n\nconsole.log(MockProxy().foo.bar()[0])\n```\n\n\n\nAbove package doesn't works outside of Node.js and neither we need any platform specific logic! When aliasing `os` to `mock/proxy-cjs`, it will be auto mocked using a [Proxy Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) which can be recursively traversed like an `Object`, called like a `Function`, Iterated like an `Array`, or instantiated like a `Class`.\n\nWe use this proxy for auto mocking unimplemented internals. Imagine a packages does this:\n\n```js\nconst os = require('os')\nif (os.platform() === 'windows') { /* do some fix */ }\nmodule.exports = () => 'Hello world'\n```\n\nBy aliasing `os` to `unenv/runtime/mock/proxy-cjs`, code will be compatible in other platforms.\n\n## Other polyfilles\n\nPlease check [./src/rutime](./src/runtime) to discover other polyfilles.\n\n## License\n\nMIT\n"
+}

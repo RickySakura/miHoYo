@@ -1,0 +1,78 @@
+{
+  "name": "unstorage",
+  "version": "0.3.3",
+  "description": "Universal Storage Layer",
+  "repository": "unjs/unstorage",
+  "license": "MIT",
+  "sideEffects": false,
+  "exports": {
+    "./drivers/*": {
+      "import": "./drivers/*.mjs",
+      "require": "./drivers/*.cjs"
+    },
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./server": {
+      "import": "./server.mjs",
+      "require": "./server.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "drivers",
+    "server*"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "dev": "jest --watch",
+    "demo": "vite demo",
+    "lint": "eslint --ext .ts .",
+    "prepack": "yarn build",
+    "release": "yarn test && standard-version && git push --follow-tags && npm publish",
+    "test": "yarn lint",
+    "doctoc": "doctoc README.md --notitle --maxlevel 3",
+    "unstorage": "yarn jiti src/cli"
+  },
+  "dependencies": {
+    "anymatch": "^3.1.1",
+    "chokidar": "^3.5.2",
+    "destr": "^1.1.0",
+    "h3": "^0.3.3",
+    "ioredis": "^4.27.9",
+    "listhen": "^0.2.4",
+    "mri": "^1.1.6",
+    "ohmyfetch": "^0.4.5",
+    "ufo": "^0.7.9",
+    "ws": "^8.2.1"
+  },
+  "devDependencies": {
+    "@nuxtjs/eslint-config-typescript": "latest",
+    "@types/ioredis": "latest",
+    "@types/jest": "latest",
+    "@types/jsdom": "latest",
+    "@types/mri": "latest",
+    "@types/node": "latest",
+    "@types/ws": "latest",
+    "@vitejs/plugin-vue": "latest",
+    "@vue/compiler-sfc": "latest",
+    "doctoc": "latest",
+    "eslint": "latest",
+    "jest": "latest",
+    "jiti": "latest",
+    "jsdom": "latest",
+    "mkdist": "latest",
+    "monaco-editor": "latest",
+    "standard-version": "latest",
+    "ts-jest": "latest",
+    "types-cloudflare-worker": "^1.2.0",
+    "typescript": "latest",
+    "unbuild": "latest",
+    "vite": "latest",
+    "vue": "^3.0.5"
+  }
+}

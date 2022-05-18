@@ -1,0 +1,43 @@
+{
+  "name": "radix3",
+  "version": "0.1.1",
+  "description": "Lightweight and fast router for JavaScript based on Radix Tree",
+  "repository": "unjs/radix3",
+  "license": "MIT",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    "require": "./dist/index.cjs",
+    "import": "./dist/index.mjs"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "lint": "eslint --ext .ts,.mjs .",
+    "playground": "yarn jiti ./playground.ts",
+    "release": "yarn lint && yarn test run && yarn build && standard-version && git push --follow-tags && npm publish",
+    "bench": "node ./benchmark/direct.mjs",
+    "bench:http": "node ./benchmark/http.mjs",
+    "bench:profile": "0x -o -D benchmark/.profile -- node ./benchmark/direct.mjs",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "0x": "latest",
+    "@nuxtjs/eslint-config-typescript": "latest",
+    "autocannon": "latest",
+    "benchmark": "latest",
+    "c8": "latest",
+    "eslint": "latest",
+    "jiti": "latest",
+    "listhen": "latest",
+    "ohmyfetch": "latest",
+    "standard-version": "latest",
+    "unbuild": "latest",
+    "vitest": "latest"
+  }
+}
