@@ -1,6 +1,5 @@
 <template>
   <div :class="'home-' + page">
-    this is {{ page }}
 
   </div>
 </template>
