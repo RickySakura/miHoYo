@@ -3,6 +3,7 @@
     <NuxtLayout name="mi-layout">
       <template #header>
         <MiHeader :links="links" @click="linkMatchRoute" ref="miheader" />
+        <MiLangSelect />
       </template>
       <template #default>
         <Page />
