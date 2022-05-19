@@ -1,7 +1,7 @@
 <template>
   <div :class="'home-' + page">
     <!-- this is {{ page }} -->
-    <NavBar />
+   <!--  <NavBar /> -->
 
   </div>
 </template>
