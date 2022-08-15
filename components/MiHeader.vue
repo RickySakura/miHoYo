@@ -1,12 +1,14 @@
 <template>
-  <div class="header">
-
+  <div class="header" v-if="isRender">
     <div class="header__navwrap">
       <div class="header__navbar">
         <div class="header__navbar-logo">
           <NuxtLink to="/">
             <slot name="logo">
-              <img src="https://www.mihoyo.com/_nuxt/img/mihoyo-logo.754bbce.png" alt="miHoYo_F">
+              <img
+                src="https://www.mihoyo.com/_nuxt/img/mihoyo-logo.754bbce.png"
+                alt="miHoYo_F"
+              />
             </slot>
           </NuxtLink>
           <!-- <a href="/">
@@ -14,8 +16,15 @@
         </div>
         <div class="header__navbar-links">
           <slot name="links">
-            <div class="header__navbar-link" v-for="(item, index) in links" @click="linkSelect(index); click(index)"
-              :class="state[index] == true ? 'header__navbar-link--active' : ''">
+            <div
+              class="header__navbar-link"
+              v-for="(item, index) in links"
+              @click="
+                linkSelect(index);
+                click(index);
+              "
+              :class="state[index] == true ? 'header__navbar-link--active' : ''"
+            >
               <span>{{ item }}</span>
               <b>{{ item }}</b>
             </div>
@@ -28,36 +37,55 @@
 
 <script setup>
 const props = defineProps({
-  links: Array
-})
-const emits = defineEmits(['click'])
+  links: Array,
+});
+const emits = defineEmits(["click"]);
 // 初始化一个状态数组，根据状态改变连接的选中样式
-let state = ref([])
+let state = ref([]);
 function linkSelect(index) {
-  state.value = []
+  state.value = [];
   for (let i in props.links) {
-    state.value.push(false)
+    state.value.push(false);
   }
-  state.value[index] = true
+  state.value[index] = true;
 }
 function click(index) {
-  emits('click', index)  //发送事件，让父元素监听
+  emits("click", index); //发送事件，让父元素监听
 }
 onMounted(() => {
   for (let i in props.links) {
-    state.value.push(false)
+    state.value.push(false);
   }
-})
+});
 defineExpose({
-  linkSelect
-})
+  linkSelect,
+});
+
+// 控制顶部导航栏 在首页不渲染
+let isRender = ref(false);
+let current_page = useRoute().query.page;
+function isNotIndexPge(p) {
+  if (p != undefined && p != "index" && p != null && p != "" && p != "/") {
+    return true;
+  } else {
+    return false;
+  }
+}
+isRender.value = isNotIndexPge(current_page);
+// 监听路由，如果为当前页为主页则不渲染头部导航栏
+watch(
+  () => useRoute().query.page,
+  (nextPage) => {
+    isRender.value = isNotIndexPge(nextPage);
+  }
+);
 </script>
 
 <style lang="less" scoped>
 .header {
   width: 100%;
   min-width: 14rem;
-  height: .9rem;
+  height: 0.9rem;
   overflow: hidden;
   position: fixed;
   top: 0;
@@ -79,7 +107,7 @@ defineExpose({
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 .48rem 0 .7rem;
+  padding: 0 0.48rem 0 0.7rem;
   margin-right: 1.8rem;
   white-space: nowrap;
   flex-wrap: nowrap;
@@ -89,16 +117,16 @@ defineExpose({
     position: absolute;
     right: 0;
     width: 1px;
-    height: .18rem;
+    height: 0.18rem;
     background-color: #e6e7eb;
   }
 }
 
 .header__navbar-logo {
-  height: .46rem;
+  height: 0.46rem;
 
   img {
-    height: .46rem;
+    height: 0.46rem;
   }
 }
 
@@ -109,11 +137,11 @@ defineExpose({
 
 .header__navbar-link {
   position: relative;
-  font-size: .18rem;
+  font-size: 0.18rem;
   color: #676b73;
-  padding: .1rem;
-  padding-right: .05rem;
-  margin-left: .8rem;
+  padding: 0.1rem;
+  padding-right: 0.05rem;
+  margin-left: 0.8rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -158,6 +186,5 @@ defineExpose({
   b {
     visibility: visible;
   }
-
 }
 </style>

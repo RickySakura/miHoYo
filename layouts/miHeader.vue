@@ -1,12 +1,11 @@
 <template>
   <div class="header">
-
     <div class="header__navwrap">
       <div class="header__navbar">
         <div class="header__navbar-logo">
           <NuxtLink to="/">
             <slot name="logo">
-              <img src="https://www.mihoyo.com/_nuxt/img/mihoyo-logo.754bbce.png" alt="miHoYo_F">
+              <img src="https://www.mihoyo.com/_nuxt/img/mihoyo-logo.754bbce.png" alt="miHoYo_F" />
             </slot>
           </NuxtLink>
           <!-- <a href="/">
@@ -26,15 +25,13 @@
   </div>
 </template>
 
-<script setup>
-
-</script>
+<script setup></script>
 
 <style lang="less" scoped>
 .header {
   width: 100%;
   min-width: 14rem;
-  height: .9rem;
+  height: 0.9rem;
   overflow: hidden;
   position: fixed;
   top: 0;
@@ -56,7 +53,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 .48rem 0 .7rem;
+  padding: 0 0.48rem 0 0.7rem;
   margin-right: 1.8rem;
   white-space: nowrap;
   flex-wrap: nowrap;
@@ -66,16 +63,16 @@
     position: absolute;
     right: 0;
     width: 1px;
-    height: .18rem;
+    height: 0.18rem;
     background-color: #e6e7eb;
   }
 }
 
 .header__navbar-logo {
-  height: .46rem;
+  height: 0.46rem;
 
   img {
-    height: .46rem;
+    height: 0.46rem;
   }
 }
 
@@ -86,11 +83,11 @@
 
 .header__navbar-link {
   position: relative;
-  font-size: .18rem;
+  font-size: 0.18rem;
   color: #676b73;
-  padding: .1rem;
-  padding-right: .05rem;
-  margin-left: .8rem;
+  padding: 0.1rem;
+  padding-right: 0.05rem;
+  margin-left: 0.8rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -134,6 +131,5 @@
   b {
     visibility: visible;
   }
-
 }
 </style>

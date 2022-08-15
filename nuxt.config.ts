@@ -3,7 +3,7 @@ import { defineNuxtConfig } from 'nuxt'
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
   shim: false,
-  css: ['/assets/css/style.css'],
+  css: ['/assets/css/style.css', '/assets/css/anim.css'],  // 载入全局css
   app: {
     head: {
       meta: [

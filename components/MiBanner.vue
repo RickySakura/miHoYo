@@ -1,40 +1,64 @@
 <template>
-  <div class="swiper-container home-product-swiper" @mousemove="slideWithMouse">
+  <div class="home-product-swiper swiper-container" @mousemove="slideWithMouse">
     <!-- 第二层一个包裹块 -->
     <div class="swiper-wrapper">
       <div class="swiper-slide" v-for="(item, index) in datasets">
         <div :class="index == activeIndex ? 'animated' : ''">
           <div class="minbanner">
             <div class="mibanner-board">
-              <img :src="item.bannerboard" alt="miHoYo_F" :style="boardstyle">
+              <img :src="item.bannerboard" alt="miHoYo_F" :style="boardstyle" />
             </div>
             <div class="mibanner-box">
               <slot name="game">
-                <img :src="item.bannerimg" alt="miHoYo_imitate" class="mibanner-game"
-                  :class="index == activeIndex ? 'animate' : ''" :style="style">
+                <img
+                  :src="item.bannerimg"
+                  alt="miHoYo_imitate"
+                  class="mibanner-game"
+                  :class="index == activeIndex ? 'animate' : ''"
+                  :style="style"
+                />
               </slot>
             </div>
-            <MiBannerBtn @click="showVideo(datasets[activeIndex].videosrc)"></MiBannerBtn>
+            <MiBannerBtn
+              @click="showVideo(datasets[activeIndex].videosrc)"
+              v-if="item.videosrc || item.videosrc != ''"
+            >
+            </MiBannerBtn>
           </div>
           <div class="mibanner__info">
             <div class="mibanner__info-name">
-              <img :src="item.name.img" alt class="mibanner__info-name-img">
+              <img
+                v-if="item.name.img"
+                :src="item.name.img"
+                alt
+                class="mibanner__info-name-img"
+              />
+              <div v-else style="font-weight: bold">{{ item.name.cnname }}</div>
               <span class="enname anim">{{ item.name.enname }}</span>
             </div>
             <div class="mibanner__info-slash"></div>
             <div class="mibanner__info-desc">
               <p v-for="desc in item.desc">{{ desc }}</p>
             </div>
-            <div class="mibanner__info-socials">
-              <a :href="item.socials[0].href" class="mibanner__info-social" target="_blank">
+            <div
+              class="mibanner__info-socials"
+              v-if="item.socials || item.socials.length > 0"
+            >
+              <div
+                v-for="(social, index) in item.socials"
+                @click="goblank(datasets[activeIndex].socials[index].href)"
+                class="mibanner__info-social"
+              >
+                <span>
+                  {{ social.title }}
+                  <div class="mibanner__info-social-qrcode" v-if="social.qrcode">
+                    <img :src="social.qrcode" alt="miHoYo" />
+                  </div>
+                </span>
+              </div>
+              <!-- <a :href="item.socials[0].href" class="mibanner__info-social" target="_blank">
                 <span>{{ item.socials[0].title }}</span>
               </a>
-              <!-- <a href="" class="mibanner__info-social" target="_blank">
-              <span>微博</span>
-            </a>
-            <a href="https://space.bilibili.com/401742377" class="mibanner__info-social" target="_blank">
-              <span>Bilibili</span>
-            </a> -->
               <div class="mibanner__info-social" @click="goblank(datasets[activeIndex].socials[1].href)">
                 <span>{{ item.socials[1].title }}</span>
               </div>
@@ -50,7 +74,7 @@
                 <span>
                   {{ item.socials[3].title }}
                 </span>
-              </div>
+              </div> -->
             </div>
             <!-- <h1 :class="index == activeIndex ? 'ani' : 'ani-exit'">{{ index }}</h1> -->
             <!-- <div class="txt" :class="index == activeIndex ? 'ani' : 'ani-exit'">HAHAHA</div> -->
@@ -59,15 +83,14 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script setup>
-import Swiper from 'swiper'
+import Swiper from "swiper";
 const props = defineProps({
   delay: {
     type: Number,
-    default: 3420
+    default: 3420,
   },
   // 图片地址
   // banneritems: {
@@ -86,117 +109,123 @@ const props = defineProps({
   // },
   datasets: {
     type: Array,
-  }
-})
-const emit = defineEmits(['bannerchange', 'bannertransition'])
-let swiper = null
-let timeOut = null
-let activeIndex = ref(-1)
-let translate = 0
-let style = ref(null)
-let boardstyle = ref(null)
+  },
+});
+const emit = defineEmits(["bannerchange", "bannertransition"]);
+let swiper = null;
+let timeOut = null;
+let activeIndex = ref(-1);
+let translate = 0;
+let style = ref(null);
+let boardstyle = ref(null);
 
 function goblank(url) {
-  window.open(url, "_blank")
+  window.open(url, "_blank");
 }
 onMounted(() => {
-  swiper = new Swiper('.home-product-swiper', {
-    observer: true, // 修改swiper自己或子元素时，自动初始化swiper
+  swiper = new Swiper(".home-product-swiper", {
+    observer: true, // 修改swiper自己或子元素时，自动初始化swiper,也就是响应式
     observeParents: true, // 修改swiper的父元素时，自动初始化swiper
     preloadImages: true,
     updateOnImagesReady: true,
-    effect: 'fade',
+    effect: "fade",
     fadeEffect: {
       crossFade: true,
     },
     on: {
       init: () => {
         // 将原本没有的animated类，经过一定的延时添加，才能产生过渡效果，直接添加的话是没有过渡的，直接就是最终样式
-        setTimeout(() => activeIndex.value = swiper.activeIndex, 10)
+        setTimeout(() => (activeIndex.value = swiper.activeIndex), 10);
       },
       transitionStart: () => {
         // 向外发出当前的index
-        emit("bannerchange", swiper.activeIndex)
-        activeIndex.value = swiper.activeIndex
+        emit("bannerchange", swiper.activeIndex);
+        activeIndex.value = swiper.activeIndex;
       },
       touchMove: () => {
         // 手动切换元素后，也暂停10s，
-        pause(10000)
+        pause(10000);
       },
     },
   });
-  autoplay()
-})
+  autoplay();
+});
 // wathc监听路由的变化，在离开当前页面后轮播图不再播放，当回到该页面后重新播放并重新加载动画类，让动画也重新播放
-watch(() => useRoute().query, newRoute => {
-  if (newRoute.page != 'product') {
-    activeIndex.value = -1  // activeIndex的值控制动画是否加载，只需要变化这个值即可重新加载动画。
-    pause(true)
-  } else {
-    activeIndex.value = swiper.activeIndex // activeIndex的值控制动画是否加载，只需要变化这个值即可重新加载动画。
-    pause(false)
+watch(
+  () => useRoute().query,
+  (newRoute) => {
+    if (newRoute.page != "product") {
+      activeIndex.value = -1; // activeIndex的值控制动画是否加载，只需要变化这个值即可重新加载动画。
+      pause(true);
+    } else {
+      activeIndex.value = swiper.activeIndex; // activeIndex的值控制动画是否加载，只需要变化这个值即可重新加载动画。
+      pause(false);
+    }
   }
-})
+);
 function autoplay() {
   timeOut = setTimeout(() => {
     if (swiper.isEnd) {
       // 如果是结尾 就回到开头
       swiper.slideTo(0);
     } else {
-      swiper.slideNext()
+      swiper.slideNext();
     }
-    autoplay()
-  }, props.delay)
+    autoplay();
+  }, props.delay);
 }
 function slideTo(index) {
-  swiper.slideTo(index)
+  swiper.slideTo(index);
   // 用户调用方法后，延迟10秒再开始自动播放
-  pause(10000)
+  pause(10000);
 }
 /**
  * 设置轮播图暂停一段时间
  * @param {number|boolean} time 需要暂停的时间，单位为毫秒(ms),如果传入true则永久暂停直到手动开启，传入false重新启动
  */
 function pause(time) {
-  clearTimeout(timeOut)
+  clearTimeout(timeOut);
   // 切记一定要获得延迟后的定时器id，否则如果短时间内多次调用会导致产生很多定时器，从而混乱
   if (time == false) {
-    autoplay()
-  } else if (typeof (time) == 'number') {
+    autoplay();
+  } else if (typeof time == "number") {
     timeOut = setTimeout(() => {
-      autoplay()
-    }, time)
+      // 一定要在这里清除一次鼠标对轮播图的位移影响，不然自动播放后，图片会"跳"一下
+      style.value = null;
+      boardstyle.value = null;
+      autoplay();
+    }, time);
   }
 }
 
 // 下面这个问题，随鼠标滑动这个问题 一直没解决，怎么才能像官网那么丝滑呢？一直很卡！！
-let transition_duration = 700
+let transition_duration = 700;
 function slideWithMouse(e) {
-  emit("bannertransition", transition_duration)
+  emit("bannertransition", transition_duration);
   // 让元素随着鼠标相反的方向移动
-  translate = -0.05 * e.pageX + 38.4  // box中的轮播大图最终位移位置
-  let trans_board = -0.015 * e.pageX + 11.52 // board中背景小图的最终位移位置
-  style.value = `transform: translate(${translate}px, 0); transition: transform ${transition_duration}ms cubic-bezier(0,.3,.5,1);`
-  boardstyle.value = `transform: translate3d(${trans_board}px, 0px, 0px) scale(1.2, 1.2); backface-visibility: hidden; transform-style: preserve-3d;transition: transform ${600}ms cubic-bezier(0,.3,.5,1)`
-  pause(transition_duration)
+  translate = -0.05 * e.pageX + 38.4; // box中的轮播大图最终位移位置
+  let trans_board = -0.015 * e.pageX + 11.52; // board中背景小图的最终位移位置
+  style.value = `transform: translate(${translate}px, 0); transition: transform ${transition_duration}ms cubic-bezier(0,.3,.5,1);`;
+  boardstyle.value = `transform: translate3d(${trans_board}px, 0px, 0px) scale(1.2, 1.2); backface-visibility: hidden; transform-style: preserve-3d;transition: transform ${600}ms cubic-bezier(0,.3,.5,1)`;
+  pause(transition_duration);
 }
 // 徐娅向外公开的变量
 defineExpose({
-  slideTo
-})
+  slideTo,
+});
 
-let isShowVideo = useState('isShowVideo')
+let isShowVideo = useState("isShowVideo");
 function showVideo(videoSrc) {
-  isShowVideo.value = videoSrc
+  isShowVideo.value = videoSrc;
 }
 // 监听视频是否播放。如果视频正在播放，则停止导航图轮播，否则重新开始轮播
 watch(isShowVideo, (n) => {
   if (n != false) {
-    pause(true)
+    pause(true);
   } else {
-    pause(false)
+    pause(false);
   }
-})
+});
 </script>
 
 <style lang="less" scoped>
@@ -225,7 +254,6 @@ watch(isShowVideo, (n) => {
   15% {
     transform: translate(30px, 0);
     opacity: 1;
-
   }
 
   100% {
@@ -277,7 +305,6 @@ watch(isShowVideo, (n) => {
   }
 
   .animated {
-
     .mibanner__info-name,
     .mibanner__info-slash,
     .mibanner__info-desc,
@@ -310,7 +337,7 @@ watch(isShowVideo, (n) => {
   width: 12.8rem;
   height: calc(100% - 0.9rem);
   margin: 0 auto;
-  top: .9rem;
+  top: 0.9rem;
 
   &::before {
     content: "";
@@ -356,14 +383,16 @@ watch(isShowVideo, (n) => {
     width: 3.22rem;
     height: 2.02rem;
     top: 0;
-    background: url("https://www.mihoyo.com/_nuxt/img/product-card-bg.2acc93f.png") top right/cover no-repeat;
+    background: url("https://www.mihoyo.com/_nuxt/img/product-card-bg.2acc93f.png") top
+      right/cover no-repeat;
   }
 
   &::after {
     width: 0.38rem;
     height: 0.34rem;
     bottom: 0;
-    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAiCAYAAAAzrKu4AAAAAXNSR0IArs4c6QAAAmhJREFUWEfNmD2MTUEYhp8XIRQUNDR0dJS0NH5XFMSqFKgo/HVERUOU6OhshZCgolLR0GgoNAoJCSHi95VvM7vZvXtm5kjO2Xsn2VvtfPPcOTPv95wrRmzYFnA5PkZm2F4M3ALGRwbM9nLgDrAtdmokwGyvBh4Cm6Ye39DBbK8HHgPrZp6poYLZ3gw8AFYNHvShgdneA0wAy5pu31DAbB8BrgOLcpEw72C2LwDxV1x73sBsLwSuAccqwfkXODsvYLaXpvM0VoH6ARyWNNE7mO2V6eZtqUB9BvZJetp7wNpemzJqQwXqPbBD0qveA9b2xpTmaypQrxPUu94D1vbW1PdWVKCeAWOSPvUesLYPJkNYUoG6BxyS9L33gLV9ErgCLKhARbiekPSn14CdkjvgdAXIwHlJF3P/15kozpS7CtSvCFdJIYKNozNRHJS7AthX4ICkRwWobkSxSe4yi34Adkl6UYDqRhRzctew8Btgu6S3BahuRNF2tJb7TXI3sPhzYLek2LHcmepGFGtyN2P1OEv7JX0rQHUjiraPJm3Jyl2CuJlu3+8CVDei2FLuIqMuSTpXio2WtcoWmeQuUjp2qzQiwY9LulHYpbaiOFki62O24yXhdjTZClT0uuh50ftyh7ytKE7PbwT7D7n7COyVFJaQg2orirPmzwGzHS+ecatqchf+FHIXPpWDaltrzvxZYEnuAiqSuDReAjslhXnmoEIU29RqnD8NluTuLhA9qzSeJDf/UoAKUWxTK7vOJJjtcSDypyZ3cRniLeZnAaptreK3l+1T8UNZC7m7CpyRFHmVe3xta1UeCvwDshr8RLnNUx4AAAAASUVORK5CYII=") top right/cover no-repeat;
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAiCAYAAAAzrKu4AAAAAXNSR0IArs4c6QAAAmhJREFUWEfNmD2MTUEYhp8XIRQUNDR0dJS0NH5XFMSqFKgo/HVERUOU6OhshZCgolLR0GgoNAoJCSHi95VvM7vZvXtm5kjO2Xsn2VvtfPPcOTPv95wrRmzYFnA5PkZm2F4M3ALGRwbM9nLgDrAtdmokwGyvBh4Cm6Ye39DBbK8HHgPrZp6poYLZ3gw8AFYNHvShgdneA0wAy5pu31DAbB8BrgOLcpEw72C2LwDxV1x73sBsLwSuAccqwfkXODsvYLaXpvM0VoH6ARyWNNE7mO2V6eZtqUB9BvZJetp7wNpemzJqQwXqPbBD0qveA9b2xpTmaypQrxPUu94D1vbW1PdWVKCeAWOSPvUesLYPJkNYUoG6BxyS9L33gLV9ErgCLKhARbiekPSn14CdkjvgdAXIwHlJF3P/15kozpS7CtSvCFdJIYKNozNRHJS7AthX4ICkRwWobkSxSe4yi34Adkl6UYDqRhRzctew8Btgu6S3BahuRNF2tJb7TXI3sPhzYLek2LHcmepGFGtyN2P1OEv7JX0rQHUjiraPJm3Jyl2CuJlu3+8CVDei2FLuIqMuSTpXio2WtcoWmeQuUjp2qzQiwY9LulHYpbaiOFki62O24yXhdjTZClT0uuh50ftyh7ytKE7PbwT7D7n7COyVFJaQg2orirPmzwGzHS+ecatqchf+FHIXPpWDaltrzvxZYEnuAiqSuDReAjslhXnmoEIU29RqnD8NluTuLhA9qzSeJDf/UoAKUWxTK7vOJJjtcSDypyZ3cRniLeZnAaptreK3l+1T8UNZC7m7CpyRFHmVe3xta1UeCvwDshr8RLnNUx4AAAAASUVORK5CYII=")
+      top right/cover no-repeat;
   }
 
   img {
@@ -374,9 +403,7 @@ watch(isShowVideo, (n) => {
     top: 0;
     transform-origin: center;
   }
-
 }
-
 
 .mibanner-game {
   height: 8rem;
@@ -390,38 +417,37 @@ watch(isShowVideo, (n) => {
 .animate {
   opacity: 1;
   animation: shiftslide 3000ms ease-out backwards;
-  animation-delay: .2s;
+  animation-delay: 0.2s;
   transition: opacity 500ms ease-out;
 }
 
 .mibanner__info {
   position: absolute;
   top: 1.4rem;
-  right: .8rem;
+  right: 0.8rem;
   z-index: 9;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-
 }
 
 .mibanner__info-name {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  font-size: .85rem;
+  font-size: 0.85rem;
   font-family: HarmonyOS, Arial, Helvetica, sans-serif;
   line-height: 1;
   font-weight: bold;
   color: #242933;
 
   img {
-    height: .88rem;
+    height: 0.88rem;
   }
 
   .enname {
-    margin-top: .14rem;
-    font-size: .2rem;
+    margin-top: 0.14rem;
+    font-size: 0.2rem;
     font-family: HarmonyOS, Arial, Helvetica, sans-serif;
     background: linear-gradient(to right, #3778e5, #e98bc0);
     color: transparent;
@@ -429,22 +455,27 @@ watch(isShowVideo, (n) => {
   }
 
   .anim {
-    background-image: linear-gradient(-135deg, #3778e5, #e98bc0, #3778e5, #e98bc0, #3778e5);
+    background-image: linear-gradient(
+      -135deg,
+      #3778e5,
+      #e98bc0,
+      #3778e5,
+      #e98bc0,
+      #3778e5
+    );
     -webkit-text-fill-color: transparent;
     background-clip: text;
     -webkit-background-clip: text;
     background-size: 200% 100%;
     animation: masked-animation 3s infinite linear;
   }
-
-
 }
 
 .mibanner__info-slash {
   position: relative;
   width: 1rem;
-  height: .5rem;
-  margin: .16rem 0;
+  height: 0.5rem;
+  margin: 0.16rem 0;
 
   &::before {
     content: "";
@@ -460,8 +491,8 @@ watch(isShowVideo, (n) => {
 .mibanner__info-desc {
   max-width: 7.5rem;
   text-align: right;
-  font-size: .16rem;
-  line-height: .28rem;
+  font-size: 0.16rem;
+  line-height: 0.28rem;
   color: #3d424d;
 
   p {
@@ -472,15 +503,15 @@ watch(isShowVideo, (n) => {
 
 .mibanner__info-socials {
   display: flex;
-  margin-top: .3rem;
-  margin-right: .14rem;
+  margin-top: 0.3rem;
+  margin-right: 0.14rem;
   cursor: pointer;
 
   .mibanner__info-social {
-    font-size: .2rem;
+    font-size: 0.2rem;
     font-weight: bold;
     color: #3d424d;
-    margin-left: .3rem;
+    margin-left: 0.3rem;
     cursor: pointer;
 
     &:hover {
@@ -503,9 +534,10 @@ watch(isShowVideo, (n) => {
     transform: translateX(-50%);
     width: 1.36rem;
     height: 1.45rem;
-    padding: .08rem;
-    padding-top: .17rem;
-    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIgAAACRCAYAAAAYY/ABAAAAAXNSR0IArs4c6QAABOlJREFUeF7t1E9olwUcx/Hn+flzjtFo5QK3JkYlURaElStsIEWdCoIivCT01yjoupkeFmgm3YIisTzkRRpCB6GDREVJ/0cHk6LMhG2GbbZYjN/mb3uiaESRbnyOvt+/6+/5HD6f7+t5ysKfC1xggdJ1/lnglv4Tl9bLFW82q5nHv9pzzW9uUxQCWVAwWNU2NMbeKYvi/rIoDq8+0f3A0FA5R0cikL8FbBgY21kW1fa1Xcu/+/70ueuqotz1+UvdOwRCX6Aoitv7Rx6uyvLg+qtXDL/25MrDz+ybuG/4x5n1ZVVt/nRPz9vkifBfkNueH7m5Nl8evXJlffzAc51vtbXU5qZn55c98sr4ltGJZud8rdr4xYs9X1ORoIH0bTt9xblq/stLWmsdbzzbuXdNZ316AcKp8WbbE6+Ob/29MT+5vKzd+tHurl+ISLBAbhj8pqW90XGkvqy8Y+fmy/ZvurH15/8C+OBYY9WOg78+1pyrPplqnbzn+OC6WRoSLJDebWOvl0W19dFN7Yeeurf92PkOv+/I1Lr97089VBXl3s92dz+NA9I7MFrRSi/07bu+9eOXt1z+3mL9+w+cvevD442+xZ67GP8v/wSyqqM+srarfupiLHi+Tm0risb2BzuOttRri74gs835ctehyY3TM0UrZaOTZ5o9IxPNNX8BWeqbRBnHnkXxwtDZO98dbtwtEDX87wICEcYFFxCIQASigXwBvyD5doikQBBnzksKJN8OkRQI4sx5SYHk2yGSAkGcOS8pkHw7RFIgiDPnJQWSb4dICgRx5rykQPLtEEmBIM6clxRIvh0iKRDEmfOSAsm3QyQFgjhzXlIg+XaIpEAQZ85LCiTfDpEUCOLMeUmB5NshkgJBnDkvKZB8O0RSIIgz5yUFkm+HSAoEcea8pEDy7RBJgSDOnJcUSL4dIikQxJnzkgLJt0MkBYI4c15SIPl2iKRAEGfOSwok3w6RFAjizHlJgeTbIZICQZw5LymQfDtEUiCIM+clBZJvh0gKBHHmvKRA8u0QSYEgzpyXFEi+HSIpEMSZ85ICybdDJAWCOHNeUiD5doikQBBnzksKJN8OkRQI4sx5SYHk2yGSAkGcOS8pkHw7RFIgiDPnJQWSb4dICgRx5rykQPLtEEmBIM6clxRIvh0iKRDEmfOSAsm3QyQFgjhzXlIg+XaIpEAQZ85LCiTfDpEUCOLMeUmB5NshkgJBnDkvKZB8O0RSIIgz5yUFkm+HSAoEcea8pEDy7RBJgSDOnJcUSL4dIikQxJnzkgLJt0MkBYI4c15SIPl2iKRAEGfOSwok3w6RFAjizHlJgeTbIZICQZw5LymQfDtEUiCIM+clBZJvh0gKBHHmvKRA8u0QSYEgzpyXFEi+HSIpEMSZ85ICybdDJAWCOHNeUiD5doikQBBnzksKJN8OkRQI4sx5SYHk2yGSAkGcOS8pkHw7RFIgiDPnJQWSb4dICgRx5rykQPLtEEmBIM6clxRIvh0iKRDEmfOSAsm3QyQFgjhzXlIg+XaIpEAQZ85LCiTfDpEUCOLMeUmB5NshkgJBnDkvKZB8O0RSIIgz5yUFkm+HSAoEcea8pEDy7RBJgSDOnJcUSL4dIikQxJnzkgLJt0Mk/wWkp7P+002rW35ANLfkkhb4dnT2qpNnmteWvQOj1ZISPoRc4A+oyxkEmgdh9wAAAABJRU5ErkJggg==") no-repeat center/100% 100%;
+    padding: 0.08rem;
+    padding-top: 0.17rem;
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIgAAACRCAYAAAAYY/ABAAAAAXNSR0IArs4c6QAABOlJREFUeF7t1E9olwUcx/Hn+flzjtFo5QK3JkYlURaElStsIEWdCoIivCT01yjoupkeFmgm3YIisTzkRRpCB6GDREVJ/0cHk6LMhG2GbbZYjN/mb3uiaESRbnyOvt+/6+/5HD6f7+t5ysKfC1xggdJ1/lnglv4Tl9bLFW82q5nHv9pzzW9uUxQCWVAwWNU2NMbeKYvi/rIoDq8+0f3A0FA5R0cikL8FbBgY21kW1fa1Xcu/+/70ueuqotz1+UvdOwRCX6Aoitv7Rx6uyvLg+qtXDL/25MrDz+ybuG/4x5n1ZVVt/nRPz9vkifBfkNueH7m5Nl8evXJlffzAc51vtbXU5qZn55c98sr4ltGJZud8rdr4xYs9X1ORoIH0bTt9xblq/stLWmsdbzzbuXdNZ316AcKp8WbbE6+Ob/29MT+5vKzd+tHurl+ISLBAbhj8pqW90XGkvqy8Y+fmy/ZvurH15/8C+OBYY9WOg78+1pyrPplqnbzn+OC6WRoSLJDebWOvl0W19dFN7Yeeurf92PkOv+/I1Lr97089VBXl3s92dz+NA9I7MFrRSi/07bu+9eOXt1z+3mL9+w+cvevD442+xZ67GP8v/wSyqqM+srarfupiLHi+Tm0risb2BzuOttRri74gs835ctehyY3TM0UrZaOTZ5o9IxPNNX8BWeqbRBnHnkXxwtDZO98dbtwtEDX87wICEcYFFxCIQASigXwBvyD5doikQBBnzksKJN8OkRQI4sx5SYHk2yGSAkGcOS8pkHw7RFIgiDPnJQWSb4dICgRx5rykQPLtEEmBIM6clxRIvh0iKRDEmfOSAsm3QyQFgjhzXlIg+XaIpEAQZ85LCiTfDpEUCOLMeUmB5NshkgJBnDkvKZB8O0RSIIgz5yUFkm+HSAoEcea8pEDy7RBJgSDOnJcUSL4dIikQxJnzkgLJt0MkBYI4c15SIPl2iKRAEGfOSwok3w6RFAjizHlJgeTbIZICQZw5LymQfDtEUiCIM+clBZJvh0gKBHHmvKRA8u0QSYEgzpyXFEi+HSIpEMSZ85ICybdDJAWCOHNeUiD5doikQBBnzksKJN8OkRQI4sx5SYHk2yGSAkGcOS8pkHw7RFIgiDPnJQWSb4dICgRx5rykQPLtEEmBIM6clxRIvh0iKRDEmfOSAsm3QyQFgjhzXlIg+XaIpEAQZ85LCiTfDpEUCOLMeUmB5NshkgJBnDkvKZB8O0RSIIgz5yUFkm+HSAoEcea8pEDy7RBJgSDOnJcUSL4dIikQxJnzkgLJt0MkBYI4c15SIPl2iKRAEGfOSwok3w6RFAjizHlJgeTbIZICQZw5LymQfDtEUiCIM+clBZJvh0gKBHHmvKRA8u0QSYEgzpyXFEi+HSIpEMSZ85ICybdDJAWCOHNeUiD5doikQBBnzksKJN8OkRQI4sx5SYHk2yGSAkGcOS8pkHw7RFIgiDPnJQWSb4dICgRx5rykQPLtEEmBIM6clxRIvh0iKRDEmfOSAsm3QyQFgjhzXlIg+XaIpEAQZ85LCiTfDpEUCOLMeUmB5NshkgJBnDkvKZB8O0RSIIgz5yUFkm+HSAoEcea8pEDy7RBJgSDOnJcUSL4dIikQxJnzkgLJt0Mk/wWkp7P+002rW35ANLfkkhb4dnT2qpNnmteWvQOj1ZISPoRc4A+oyxkEmgdh9wAAAABJRU5ErkJggg==")
+      no-repeat center/100% 100%;
     display: none;
 
     img {

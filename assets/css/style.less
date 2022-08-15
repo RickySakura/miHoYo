@@ -6,12 +6,12 @@
 @font-face {
   font-family: "HarmonyOS";
   src: url(/fonts/HarmonyOS_Sans_SC_Regular.a5de96f.woff);
-  font-weight: normal;
+  font-weight: normal; 
 }
 @font-face {
   font-family: "HarmonyOS";
   src: url(/fonts/HarmonyOS_Sans_SC_Bold.74ff623.woff);
-  font-weight: bold;
+  font-weight: bold; 
 }
 html {
   font-size: 69.074px;
@@ -21,7 +21,7 @@ html {
   overflow: hidden;
   height: 100%;
 }
-@media screen and (max-height: 648px) {
+@media screen and (max-height:648px){
   html {
     font-size: 60px;
   }
@@ -32,9 +32,11 @@ body {
   min-height: 100%;
   position: relative;
   overflow: auto;
-  font-size: 0.24rem;
+  font-size: .24rem;
   background-color: #fff;
 }
+
+
 *,
 *::after,
 *::before {
@@ -42,17 +44,21 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
+
 a {
   color: #000;
   text-decoration: none;
   /* display: inline-block; */
 }
+
 li {
   list-style: none;
 }
+
 video {
   object-fit: contain;
 }
+
 .swiper-container {
   margin-left: auto;
   margin-right: auto;
@@ -62,6 +68,7 @@ video {
   padding: 0;
   z-index: 1;
 }
+
 .swiper-slide {
   flex-shrink: 0;
   width: 100%;
@@ -69,13 +76,17 @@ video {
   transition-property: transform, -webkit-transform;
   /* transition: all; */
 }
-.swiper-container-fade .swiper-slide {
-  pointer-events: none;
-  transition-property: opacity;
+
+.swiper-container-fade {
+  .swiper-slide {
+    pointer-events: none;
+    transition-property: opacity;
+  }
+  .swiper-slide-active {
+    pointer-events: auto;
+  }
 }
-.swiper-container-fade .swiper-slide-active {
-  pointer-events: auto;
-}
+
 .swiper-wrapper {
   position: relative;
   width: 100%;
@@ -85,39 +96,48 @@ video {
   transition-property: transform, -webkit-transform;
   box-sizing: content-box;
 }
+
 .fade-enter-to,
 .fade-leave-to {
   opacity: 0;
 }
+
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s;
+  transition: opacity .5s;
 }
-.swiper-slide-active .home-index-slg,
-.swiper-slide-active .home-index-action,
-.swiper-slide-active .scroll-tip {
-  transform: translateY(0);
+
+// 当前活跃滑动块的样式，主要用于过渡动画的终末位置
+.swiper-slide-active {
+
+  .home-index-slg,
+  .home-index-action,
+  .scroll-tip {
+    transform: translateY(0);
+  }
 }
-.swiper-slide-prev .home-index-slg {
-  transform: translateY(-1.4rem);
+
+// 前一张滑动块的样式，主要用于过渡动画的启示位置
+.swiper-slide-prev {
+  .home-index-slg {
+    transform: translateY(-1.4rem);
+  }
+  .home-index-action{
+    transform: translateY(-1rem);
+  }
+  .scroll-tip{
+    transform: translateY(-1rem);
+  }
+
 }
-.swiper-slide-prev .home-index-action {
-  transform: translateY(-1rem);
-}
-.swiper-slide-prev .scroll-tip {
-  transform: translateY(-1rem);
-}
+
 .home-swiper,
 .swiper-slide,
 .swiper-wrapper {
   height: 100%;
 }
-.home-join-tabs,
-.join-jobs-tabs,
-.join-jobs-list,
-.join-jobs-banner,
-.scroll-tip,
-.join-weal {
+
+.home-join-tabs, .join-jobs-tabs, .join-jobs-list, .join-jobs-banner, .scroll-tip, .join-weal {
   -webkit-transition: -webkit-transform 800ms;
   transition: -webkit-transform 800ms;
   -o-transition: transform 800ms;
@@ -127,6 +147,7 @@ video {
   -o-transition-delay: 300ms;
   transition-delay: 300ms;
 }
+
 .fp-page {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -142,6 +163,7 @@ video {
   -ms-flex-align: center;
   align-items: center;
 }
+
 .about-intro__vision-title,
 .about-intro__mihoyo-title,
 .about-history-title {
@@ -150,33 +172,37 @@ video {
   font-size: 0.24rem;
   font-weight: bold;
   color: #242933;
+
+  b {
+    position: absolute;
+    left: 1.04rem;
+    bottom: -0.16rem;
+    font-size: 0.1rem;
+    font-weight: normal;
+    color: #ccc;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-family: HarmonyOS, Arial, Helvetica, sans-serif;
+  }
 }
-.about-intro__vision-title b,
-.about-intro__mihoyo-title b,
-.about-history-title b {
-  position: absolute;
-  left: 1.04rem;
-  bottom: -0.16rem;
-  font-size: 0.1rem;
-  font-weight: normal;
-  color: #ccc;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  font-family: HarmonyOS, Arial, Helvetica, sans-serif;
+
+.about-intro__mihoyo-desc {
+  p {
+    margin-bottom: 0.1rem;
+  }
+  strong {
+    color: #3778e5;
+    font-weight: bold;
+  }
 }
-.about-intro__mihoyo-desc p {
-  margin-bottom: 0.1rem;
-}
-.about-intro__mihoyo-desc strong {
-  color: #3778e5;
-  font-weight: bold;
-}
-.home-about-container > div {
+
+.home-about-container>div {
   position: absolute;
   left: 50%;
   top: 0;
   transform: translateX(-50%);
 }
+
 .scroll-btn {
   z-index: 9999;
   position: relative;
@@ -192,13 +218,14 @@ video {
   height: 0.3rem;
   margin-top: 0.1rem;
   overflow: hidden;
-}
-.scroll-btn__arrow img {
-  position: absolute;
-  top: 0;
-  width: 0.08rem;
-  transform: translateY(-50%);
-  animation: scrollmove 1.4s ease-in-out 0.4s infinite;
+
+  img {
+    position: absolute;
+    top: 0;
+    width: 0.08rem;
+    transform: translateY(-50%);
+    animation: scrollmove 1.4s ease-in-out 0.4s infinite;
+  }
 }
 .scroll-btn__line {
   width: 0;
@@ -210,9 +237,11 @@ video {
   0% {
     transform: translateY(-150%);
   }
+
   80% {
     transform: translateY(300%);
   }
+
   100% {
     transform: translateY(300%);
   }

@@ -18,5 +18,9 @@
   {
     "title": "新闻动态",
     "path": "news"
+  },
+  {
+    "title": "成长关爱",
+    "path": "https://jiazhang.mihoyo.com/"
   }
 ]

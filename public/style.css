@@ -6,7 +6,7 @@
 
 html {
   font-size: 69.074px;
-  font-family: "Microsoft YaHei",微软雅黑,"MicrosoftJhengHei",华文细黑,STHeiti,MingLiu,sans-serif;
+  font-family: "Microsoft YaHei", 微软雅黑, "MicrosoftJhengHei", 华文细黑, STHeiti, MingLiu, sans-serif;
   word-spacing: 1px;
   -webkit-text-size-adjust: 100%;
   overflow: hidden;
@@ -21,7 +21,9 @@ body {
 }
 
 
-*,*::after,*::before {
+*,
+*::after,
+*::before {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -30,8 +32,24 @@ body {
 a {
   color: #000;
   text-decoration: none;
+  /* display: inline-block; */
 }
 
 li {
   list-style: none;
+}
+
+video {
+  object-fit: contain;
+}
+
+
+.fade-enter-to,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .5s;
 }

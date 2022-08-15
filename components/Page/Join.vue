@@ -1,11 +1,9 @@
 <template>
-  <div :class="'home-' + page">
-    this is {{ page }}
-  </div>
+  <div :class="'home-' + page">this is {{ page }}</div>
 </template>
 
 <script setup>
-const page = 'join'
+const page = "join";
 </script>
 
 <style lang="less" scoped>
