@@ -2988,8 +2988,8 @@
       "sUrl": "",
       "sAuthor": "",
       "sContent": "",
-      "sYear": 2011,
       "sExt": {
+        "fp": true,
         "history-content": "米哈游创始团队推出独立游戏《FlyMe2theMoon》",
         "history-icon": [
           {
@@ -3025,8 +3025,8 @@
       "sUrl": "",
       "sAuthor": "",
       "sContent": "",
-      "sYear": 2012,
       "sExt": {
+        "fp": true,
         "history-content": "米哈游公司正式注册成立，上线《崩坏学园》\n",
         "history-icon": [
           {
@@ -3062,8 +3062,8 @@
       "sUrl": "",
       "sAuthor": "",
       "sContent": "",
-      "sYear": 2014,
       "sExt": {
+        "fp": true,
         "history-content": "推出Q版射击手游《崩坏学园2》",
         "history-icon": [
           {
@@ -3099,8 +3099,8 @@
       "sUrl": "",
       "sAuthor": "",
       "sContent": "",
-      "sYear": 2016,
       "sExt": {
+        "fp": true,
         "history-content": "推出3D动作手游《崩坏3》",
         "history-icon": [
           {
@@ -3136,8 +3136,8 @@
       "sUrl": "",
       "sAuthor": "",
       "sContent": "",
-      "sYear": 2018,
       "sExt": {
+        "fp": true,
         "history-content": "推出社区产品《米游社》",
         "history-icon": [
           {
@@ -3172,9 +3172,9 @@
       "sIntro": "",
       "sUrl": "",
       "sAuthor": "",
-      "sYear": 2020,
       "sContent": "",
       "sExt": {
+        "fp": true,
         "history-content": "推出女性向手游 《未定事件簿》",
         "history-icon": [
           {
@@ -3281,9 +3281,9 @@
       "sIntro": "",
       "sUrl": "",
       "sAuthor": "",
-      "sYear": 2021,
       "sContent": "",
       "sExt": {
+        "fp": true,
         "history-content": "公布银河冒险策略类游戏《崩坏：星穹铁道》\n",
         "history-icon": [
           {
