@@ -16,8 +16,6 @@
         </div>
       </div>
       <div class="home-about-container">
-        <!-- <PageAboutIntro :intro-res="introRes" :vision-res="visionRes" /> -->
-        <!-- <PageAboutHistory :h-res="hRes" /> -->
         <transition>
           <component :is='component' :res="res"></component>
         </transition>
