@@ -5,10 +5,7 @@
         <div class="header__navbar-logo">
           <NuxtLink to="/">
             <slot name="logo">
-              <img
-                src="https://www.mihoyo.com/_nuxt/img/mihoyo-logo.754bbce.png"
-                alt="miHoYo_F"
-              />
+              <img src="https://www.mihoyo.com/_nuxt/img/mihoyo-logo.754bbce.png" alt="miHoYo_F" />
             </slot>
           </NuxtLink>
           <!-- <a href="/">
@@ -16,15 +13,10 @@
         </div>
         <div class="header__navbar-links">
           <slot name="links">
-            <div
-              class="header__navbar-link"
-              v-for="(item, index) in links"
-              @click="
-                linkSelect(index);
-                click(index);
-              "
-              :class="state[index] == true ? 'header__navbar-link--active' : ''"
-            >
+            <div class="header__navbar-link" v-for="(item, index) in links" @click="
+  linkSelect(index);
+click(index);
+            " :class="state[index] == true ? 'header__navbar-link--active' : ''">
               <span>{{ item }}</span>
               <b>{{ item }}</b>
             </div>
@@ -53,10 +45,12 @@ function click(index) {
   emits("click", index); //发送事件，让父元素监听
 }
 onMounted(() => {
+  linkSelect(useState("pageIndex").value)
   for (let i in props.links) {
     state.value.push(false);
   }
 });
+// 向外公开修改选中的方法
 defineExpose({
   linkSelect,
 });
@@ -65,7 +59,7 @@ defineExpose({
 let isRender = ref(false);
 let current_page = useRoute().query.page;
 function isNotIndexPge(p) {
-  if (p != undefined && p != "index" && p != null && p != "" && p != "/") {
+  if (p != undefined) {
     return true;
   } else {
     return false;
@@ -77,6 +71,9 @@ watch(
   () => useRoute().query.page,
   (nextPage) => {
     isRender.value = isNotIndexPge(nextPage);
+    if (nextPage == 'join') {
+      isRender.value = false;
+    }
   }
 );
 </script>

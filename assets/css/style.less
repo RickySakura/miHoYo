@@ -166,7 +166,8 @@ video {
 
 .about-intro__vision-title,
 .about-intro__mihoyo-title,
-.about-history-title {
+.about-history-title,
+.about-honor-title {
   position: relative;
   margin-bottom: 0.4rem;
   font-size: 0.24rem;
@@ -246,3 +247,20 @@ video {
     transform: translateY(300%);
   }
 }
+
+// 右上角侧边栏装饰图样式
+.aside-decoration {
+  position: absolute;
+  top: .9rem;
+  right: 0;
+  width: 1.76rem;
+  transition: transform 1500ms, opacity 1500ms;
+  transform: translateX(1.5rem);
+  opacity: 0;
+}
+
+.swiper-slide-active .aside-decoration{
+  transform: translateX(0);
+  opacity: 1;
+}
+

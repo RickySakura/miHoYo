@@ -19,6 +19,15 @@ function toEn() {
 let isRender = ref(false);
 let useFaded = useState("useFaded").value;
 useFaded("lang-select", isRender);
+// 标记
+watch(() => useRoute().query.page, (page) => {
+  if (page == 'join') {
+    isRender.value = false;
+  } else {
+    isRender.value = true
+  }
+})
+
 // let current_page = useRoute().query.page;
 // function isNotIndexPge(p) {
 //   if (p != undefined && p != "index" && p != null && p != "" && p != "/") {

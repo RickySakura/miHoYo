@@ -56,17 +56,16 @@ function linkMatchRoute(index) {
 }
 // 根据路由改变顶部导航栏链接状态
 function routeMatchLink() {
-  if (useRoute().query.page == undefined) {
-    if (miheader.value != null) {
+  // 当顶部栏组件创建后
+  if (miheader.value != null) {
+    if (useRoute().query.page == undefined) {
       miheader.value.linkSelect(0);
-    }
-  } else {
-    for (let i = 0; i < paths.value.length; i++) {
-      if (useRoute().query.page == paths.value[i]) {
-        if (miheader.value != null) {
+    } else {
+      for (let i = 0; i < paths.value.length; i++) {
+        if (useRoute().query.page == paths.value[i]) {
           miheader.value.linkSelect(i);
+          break;
         }
-        break;
       }
     }
   }

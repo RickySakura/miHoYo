@@ -1,6 +1,9 @@
 <template>
   <div class="about-history">
-    <div class="about-history-title" v-html="hRes.title"></div>
+    <div class="about-history-title">
+      发展历程
+      <b style="left:0.56rem"> Milestones</b>
+    </div>
     <div class="about-history-process">
       <div class="swiper-container event-swiper swiper-container-fade">
         <div class="swiper-wrapper">
@@ -16,15 +19,25 @@
       <div class="timeline">
         <div class="centered-container"></div>
         <ul class="timeline-list" :style="style">
-          <li v-for="(item, index) in yearsHistory" class="timeline-item"
-            :class="[item.y != null ? 'hasYear' : '', 'index-' + index]" :key="index" @click="navTo(index)">
-            <div class="timeline-item__year" v-if="item.y">
-              <span> {{ item.y }} </span>
+          <li v-for="(item, index) in yearsEvents" class="timeline-item"
+            :class="[item.sYear != null ? 'hasYear' : '', 'index-' + index]" :key="index" @click="navTo(index)">
+            <div class="timeline-item__year" v-if="item.sYear">
+              <span> {{ item.sYear }} </span>
             </div>
             <div class="timeline-item__event">
               <div class="timeline-item__nav">
                 <img :src="item.icon" alt="mihoyo" class="timeline-item__nav-icon" />
                 <b class="timeline-item__nav-month">{{ item.month }}</b>
+              </div>
+            </div>
+          </li>
+          <li class="timeline-item">
+            <div class="timeline-item__event">
+              <div class="timeline-item__nav">
+                <img
+                  src="data:image/png;base64,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"
+                  class="timeline-item__nav-icon">
+                <b class="timeline-item__nav-month">敬请期待</b>
               </div>
             </div>
           </li>
@@ -39,58 +52,41 @@
 <script setup>
 import Swiper from "swiper";
 // 数据现在这请求，实际上线后在想办法移到一个模块里吧
-defineProps(["hRes"]);
-let first = -1;
-let swiper = new Swiper(".event-swiper", {
-  observer: true, // 修改swiper自己或子元素时，自动初始化swiper,也就是响应式
-  observeParents: true, // 修改swiper的父元素时，自动初始化swiper
-  preloadImages: true,
-  updateOnImagesReady: true,
-  effect: "fade",
-  fadeEffect: {
-    crossFade: true,
-  },
-  on: {
-    // 监听活跃slide的变换
-    transitionStart: () => {
-      if (swiper.activeIndex == 0) {
-        disl.value = true;
-      } else disl.value = false;
-      if (swiper.isEnd) {
-        disr.value = true;
-      } else disr.value = false;
-      if (first != 1) {
-        first++;
-        return;
-      }
-      navTo(swiper.activeIndex);
-    },
-  },
-});
-let yearsEvents = ref(null);
-let yearsHistory = ref([]);
+const props = defineProps(["res"]);
+let swiper = null
+let yearsEvents = ref('');
+let navActiveIndex = 0;
 let activeNav = () => {
   return document.querySelector(`.index-${navActiveIndex}`);
 }; // 记录当前活跃的是哪一个nav
-onMounted(async () => {
-  const { data } = await useFetch("/data/mihoyo.json", {
-    pick: ["yearsEvents", "yearsHistory"],
+onMounted(() => {
+  yearsEvents.value = props.res.yearsEvents   // 这一步的目的是让swiper尽快渲染，就不会让所有图片在页面上一闪而过了
+  swiper = new Swiper(".event-swiper", {
+    observer: true, // 修改swiper自己或子元素时，自动初始化swiper,也就是响应式
+    observeParents: true, // 修改swiper的父元素时，自动初始化swiper
+    preloadImages: true,
+    updateOnImagesReady: true,
+    effect: "fade",
+    fadeEffect: {
+      crossFade: true,
+    },
+    on: {
+      // 监听活跃slide的变换
+      transitionStart: () => {
+        if (swiper.activeIndex == 0) {
+          disl.value = true;
+        } else disl.value = false;
+        if (swiper.isEnd) {
+          disr.value = true;
+        } else disr.value = false;
+        navTo(swiper.activeIndex);
+      },
+    },
   });
-  yearsEvents.value = data.value["yearsEvents"];
-  let tmp = data.value["yearsHistory"].reverse();
-  // 数据预处理
-  tmp.forEach((el, index) => {
-    el.list.forEach((history, index) => {
-      let obj = { icon: history.icon, month: history.month };
-      if (index == 0) obj.y = el.y;
-      yearsHistory.value.push(obj);
-    });
-  });
-  tmp = null; // 释放内存
 
-  swiper.slideTo((navActiveIndex = yearsEvents.value.length - 1));
-  // nextTick，确保DOM渲染完毕后获取
+  // nextTick，确保DOM渲染完毕后获取DOM元素
   nextTick(() => {
+    swiper.slideTo((navActiveIndex = yearsEvents.value.length - 1));
     activeNav().classList.add("active");
     for (let i = 1; i < yearsEvents.value.length; i++) {
       transX -= document.querySelector(`.index-${i}`).offsetWidth;
@@ -103,7 +99,6 @@ let transX = 186; // 第一个nav的偏移量
 let style = ref(`transform:translate(${transX}px)`);
 let disl = ref(false);
 let disr = ref(true);
-let navActiveIndex = 0;
 
 function navChange(num) {
   if (num == 1) {
@@ -186,7 +181,7 @@ function navTo(num) {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 1rem;
+    height: 0.9rem;
     font-size: 0.18rem;
     font-weight: bold;
     overflow: hidden;
@@ -227,6 +222,20 @@ function navTo(num) {
 
       &.hasYear {
         padding-left: 3.3rem;
+      }
+
+      &:last-child {
+        .timeline-item__nav-month {
+          color: #a4afbc;
+        }
+
+        .timeline-item__nav-icon {
+          background: #a4afbc;
+          border: 0;
+        }
+
+        margin-left: .01rem;
+        transform: translateX(3%);
       }
     }
 

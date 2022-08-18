@@ -1,9 +1,12 @@
 <template>
   <div class="about-intro">
     <div class="about-intro__vision">
-      <div class="about-intro__vision-title" v-html="visionRes.title"></div>
+      <div class="about-intro__vision-title">
+        我们的愿景
+        <b> Our Vision</b>
+      </div>
       <div class="about-intro__vision-slg">
-        <div class="anim" v-html="visionRes.desc"></div>
+        <div class="anim" v-html="res.visionRes.desc"></div>
       </div>
     </div>
     <div class="about-intro__mihoyo">
@@ -11,13 +14,13 @@
         关于米哈游
         <b> About miHoYo</b>
       </div>
-      <div class="about-intro__mihoyo-desc" v-html="introRes"></div>
+      <div class="about-intro__mihoyo-desc" v-html="res.introRes.desc"></div>
     </div>
   </div>
 </template>
 
 <script setup>
-let props = defineProps(["introRes", "visionRes"]);
+const props = defineProps(['res']);
 </script>
 
 <style lang="less" scoped>
