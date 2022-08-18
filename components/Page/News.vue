@@ -2,7 +2,7 @@
   <div :class="'home-' + page">
     this is {{ page }}
   </div>
-  <img src="img/decoration.7a97c88.png" class="aside-decoration" />
+  <img src="/img/decoration.7a97c88.png" class="aside-decoration" />
 
 </template>
 

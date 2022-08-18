@@ -156,7 +156,7 @@ onMounted(() => {
 
 .about-honor-container {
   position: relative;
-  display: flex; // 标记
+  display: flex;
   align-items: flex-start;
   -webkit-box-align: start;
   width: 11rem;
@@ -165,7 +165,7 @@ onMounted(() => {
 
   .about-honor-container__content {
     position: relative;
-    width: 10rem; // 标记
+    width: 10rem;
     height: 4.77rem;
     padding: .4rem 0;
     margin-top: -0.4rem;

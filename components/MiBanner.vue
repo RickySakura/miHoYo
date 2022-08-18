@@ -10,29 +10,16 @@
             </div>
             <div class="mibanner-box">
               <slot name="game">
-                <img
-                  :src="item.bannerimg"
-                  alt="miHoYo_imitate"
-                  class="mibanner-game"
-                  :class="index == activeIndex ? 'animate' : ''"
-                  :style="style"
-                />
+                <img :src="item.bannerimg" alt="miHoYo_imitate" class="mibanner-game"
+                  :class="index == activeIndex ? 'animate' : ''" :style="style" />
               </slot>
             </div>
-            <MiBannerBtn
-              @click="showVideo(datasets[activeIndex].videosrc)"
-              v-if="item.videosrc || item.videosrc != ''"
-            >
+            <MiBannerBtn @click="showVideo(datasets[activeIndex].videosrc)" v-if="item.videosrc || item.videosrc != ''">
             </MiBannerBtn>
           </div>
           <div class="mibanner__info">
             <div class="mibanner__info-name">
-              <img
-                v-if="item.name.img"
-                :src="item.name.img"
-                alt
-                class="mibanner__info-name-img"
-              />
+              <img v-if="item.name.img" :src="item.name.img" alt class="mibanner__info-name-img" />
               <div v-else style="font-weight: bold">{{ item.name.cnname }}</div>
               <span class="enname anim">{{ item.name.enname }}</span>
             </div>
@@ -40,15 +27,9 @@
             <div class="mibanner__info-desc">
               <p v-for="desc in item.desc">{{ desc }}</p>
             </div>
-            <div
-              class="mibanner__info-socials"
-              v-if="item.socials || item.socials.length > 0"
-            >
-              <div
-                v-for="(social, index) in item.socials"
-                @click="goblank(datasets[activeIndex].socials[index].href)"
-                class="mibanner__info-social"
-              >
+            <div class="mibanner__info-socials" v-if="item.socials || item.socials.length > 0">
+              <div v-for="(social, index) in item.socials" @click="goblank(datasets[activeIndex].socials[index].href)"
+                class="mibanner__info-social">
                 <span>
                   {{ social.title }}
                   <div class="mibanner__info-social-qrcode" v-if="social.qrcode">
@@ -56,25 +37,6 @@
                   </div>
                 </span>
               </div>
-              <!-- <a :href="item.socials[0].href" class="mibanner__info-social" target="_blank">
-                <span>{{ item.socials[0].title }}</span>
-              </a>
-              <div class="mibanner__info-social" @click="goblank(datasets[activeIndex].socials[1].href)">
-                <span>{{ item.socials[1].title }}</span>
-              </div>
-              <div class="mibanner__info-social">
-                <span>
-                  {{ item.socials[2].title }}
-                  <div class="mibanner__info-social-qrcode">
-                    <img :src="item.socials[2].qrcode" alt="miHoYo">
-                  </div>
-                </span>
-              </div>
-              <div class="mibanner__info-social" @click="goblank(datasets[activeIndex].socials[3].href)">
-                <span>
-                  {{ item.socials[3].title }}
-                </span>
-              </div> -->
             </div>
             <!-- <h1 :class="index == activeIndex ? 'ani' : 'ani-exit'">{{ index }}</h1> -->
             <!-- <div class="txt" :class="index == activeIndex ? 'ani' : 'ani-exit'">HAHAHA</div> -->
@@ -92,21 +54,6 @@ const props = defineProps({
     type: Number,
     default: 3420,
   },
-  // 图片地址
-  // banneritems: {
-  //   type: Array,
-  //   default: [
-  //     "https://webstatic.mihoyo.com/upload/op-public/2021/10/03/6c8f2c0268e6d75b82acfef46b9d6616_3505090065322153209.png",
-  //     "https://webstatic.mihoyo.com/upload/op-public/2021/10/03/663fe95dff54044d7cd5d3a355f61bf7_6089937633900261947.png",
-  //     "https://webstatic.mihoyo.com/upload/op-public/2021/10/03/8d1f82811b02f86a5c74c329c413f7c4_7122814728754206230.png",
-  //     "https://webstatic.mihoyo.com/upload/op-public/2021/10/03/58574b8c47e058787cc24049413b7cea_7872872512863208275.png",
-  //     "https://webstatic.mihoyo.com/upload/op-public/2021/10/09/6c0e9aaa5b9471e32316d11284edb710_2698450106633206665.png",
-  //     "https://webstatic.mihoyo.com/upload/op-public/2021/10/03/c86c8d09f16a90f56ee44a3a19ac92b2_6081395262607720905.png",
-  //     "https://webstatic.mihoyo.com/upload/op-public/2021/10/03/4a30498a7e37d6897c27723e377998df_4453430102298956645.png",
-  //     "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-b02b7f48-0227-438f-8c3a-3a5f94afa017/5ddebe20-49b0-4f56-ae0c-a48e5e349065.png"
-  //     // "https://webstatic.mihoyo.com/upload/op-public/2022/05/15/788c09e4e13185d064aee039b6898723_1633791968014047407.png"
-  //   ]
-  // },
   datasets: {
     type: Array,
   },
@@ -305,6 +252,7 @@ watch(isShowVideo, (n) => {
   }
 
   .animated {
+
     .mibanner__info-name,
     .mibanner__info-slash,
     .mibanner__info-desc,
@@ -383,16 +331,14 @@ watch(isShowVideo, (n) => {
     width: 3.22rem;
     height: 2.02rem;
     top: 0;
-    background: url("https://www.mihoyo.com/_nuxt/img/product-card-bg.2acc93f.png") top
-      right/cover no-repeat;
+    background: url("https://www.mihoyo.com/_nuxt/img/product-card-bg.2acc93f.png") top right/cover no-repeat;
   }
 
   &::after {
     width: 0.38rem;
     height: 0.34rem;
     bottom: 0;
-    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAiCAYAAAAzrKu4AAAAAXNSR0IArs4c6QAAAmhJREFUWEfNmD2MTUEYhp8XIRQUNDR0dJS0NH5XFMSqFKgo/HVERUOU6OhshZCgolLR0GgoNAoJCSHi95VvM7vZvXtm5kjO2Xsn2VvtfPPcOTPv95wrRmzYFnA5PkZm2F4M3ALGRwbM9nLgDrAtdmokwGyvBh4Cm6Ye39DBbK8HHgPrZp6poYLZ3gw8AFYNHvShgdneA0wAy5pu31DAbB8BrgOLcpEw72C2LwDxV1x73sBsLwSuAccqwfkXODsvYLaXpvM0VoH6ARyWNNE7mO2V6eZtqUB9BvZJetp7wNpemzJqQwXqPbBD0qveA9b2xpTmaypQrxPUu94D1vbW1PdWVKCeAWOSPvUesLYPJkNYUoG6BxyS9L33gLV9ErgCLKhARbiekPSn14CdkjvgdAXIwHlJF3P/15kozpS7CtSvCFdJIYKNozNRHJS7AthX4ICkRwWobkSxSe4yi34Adkl6UYDqRhRzctew8Btgu6S3BahuRNF2tJb7TXI3sPhzYLek2LHcmepGFGtyN2P1OEv7JX0rQHUjiraPJm3Jyl2CuJlu3+8CVDei2FLuIqMuSTpXio2WtcoWmeQuUjp2qzQiwY9LulHYpbaiOFki62O24yXhdjTZClT0uuh50ftyh7ytKE7PbwT7D7n7COyVFJaQg2orirPmzwGzHS+ecatqchf+FHIXPpWDaltrzvxZYEnuAiqSuDReAjslhXnmoEIU29RqnD8NluTuLhA9qzSeJDf/UoAKUWxTK7vOJJjtcSDypyZ3cRniLeZnAaptreK3l+1T8UNZC7m7CpyRFHmVe3xta1UeCvwDshr8RLnNUx4AAAAASUVORK5CYII=")
-      top right/cover no-repeat;
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAiCAYAAAAzrKu4AAAAAXNSR0IArs4c6QAAAmhJREFUWEfNmD2MTUEYhp8XIRQUNDR0dJS0NH5XFMSqFKgo/HVERUOU6OhshZCgolLR0GgoNAoJCSHi95VvM7vZvXtm5kjO2Xsn2VvtfPPcOTPv95wrRmzYFnA5PkZm2F4M3ALGRwbM9nLgDrAtdmokwGyvBh4Cm6Ye39DBbK8HHgPrZp6poYLZ3gw8AFYNHvShgdneA0wAy5pu31DAbB8BrgOLcpEw72C2LwDxV1x73sBsLwSuAccqwfkXODsvYLaXpvM0VoH6ARyWNNE7mO2V6eZtqUB9BvZJetp7wNpemzJqQwXqPbBD0qveA9b2xpTmaypQrxPUu94D1vbW1PdWVKCeAWOSPvUesLYPJkNYUoG6BxyS9L33gLV9ErgCLKhARbiekPSn14CdkjvgdAXIwHlJF3P/15kozpS7CtSvCFdJIYKNozNRHJS7AthX4ICkRwWobkSxSe4yi34Adkl6UYDqRhRzctew8Btgu6S3BahuRNF2tJb7TXI3sPhzYLek2LHcmepGFGtyN2P1OEv7JX0rQHUjiraPJm3Jyl2CuJlu3+8CVDei2FLuIqMuSTpXio2WtcoWmeQuUjp2qzQiwY9LulHYpbaiOFki62O24yXhdjTZClT0uuh50ftyh7ytKE7PbwT7D7n7COyVFJaQg2orirPmzwGzHS+ecatqchf+FHIXPpWDaltrzvxZYEnuAiqSuDReAjslhXnmoEIU29RqnD8NluTuLhA9qzSeJDf/UoAKUWxTK7vOJJjtcSDypyZ3cRniLeZnAaptreK3l+1T8UNZC7m7CpyRFHmVe3xta1UeCvwDshr8RLnNUx4AAAAASUVORK5CYII=") top right/cover no-repeat;
   }
 
   img {
@@ -455,14 +401,12 @@ watch(isShowVideo, (n) => {
   }
 
   .anim {
-    background-image: linear-gradient(
-      -135deg,
-      #3778e5,
-      #e98bc0,
-      #3778e5,
-      #e98bc0,
-      #3778e5
-    );
+    background-image: linear-gradient(-135deg,
+        #3778e5,
+        #e98bc0,
+        #3778e5,
+        #e98bc0,
+        #3778e5);
     -webkit-text-fill-color: transparent;
     background-clip: text;
     -webkit-background-clip: text;
@@ -536,8 +480,7 @@ watch(isShowVideo, (n) => {
     height: 1.45rem;
     padding: 0.08rem;
     padding-top: 0.17rem;
-    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIgAAACRCAYAAAAYY/ABAAAAAXNSR0IArs4c6QAABOlJREFUeF7t1E9olwUcx/Hn+flzjtFo5QK3JkYlURaElStsIEWdCoIivCT01yjoupkeFmgm3YIisTzkRRpCB6GDREVJ/0cHk6LMhG2GbbZYjN/mb3uiaESRbnyOvt+/6+/5HD6f7+t5ysKfC1xggdJ1/lnglv4Tl9bLFW82q5nHv9pzzW9uUxQCWVAwWNU2NMbeKYvi/rIoDq8+0f3A0FA5R0cikL8FbBgY21kW1fa1Xcu/+/70ueuqotz1+UvdOwRCX6Aoitv7Rx6uyvLg+qtXDL/25MrDz+ybuG/4x5n1ZVVt/nRPz9vkifBfkNueH7m5Nl8evXJlffzAc51vtbXU5qZn55c98sr4ltGJZud8rdr4xYs9X1ORoIH0bTt9xblq/stLWmsdbzzbuXdNZ316AcKp8WbbE6+Ob/29MT+5vKzd+tHurl+ISLBAbhj8pqW90XGkvqy8Y+fmy/ZvurH15/8C+OBYY9WOg78+1pyrPplqnbzn+OC6WRoSLJDebWOvl0W19dFN7Yeeurf92PkOv+/I1Lr97089VBXl3s92dz+NA9I7MFrRSi/07bu+9eOXt1z+3mL9+w+cvevD442+xZ67GP8v/wSyqqM+srarfupiLHi+Tm0risb2BzuOttRri74gs835ctehyY3TM0UrZaOTZ5o9IxPNNX8BWeqbRBnHnkXxwtDZO98dbtwtEDX87wICEcYFFxCIQASigXwBvyD5doikQBBnzksKJN8OkRQI4sx5SYHk2yGSAkGcOS8pkHw7RFIgiDPnJQWSb4dICgRx5rykQPLtEEmBIM6clxRIvh0iKRDEmfOSAsm3QyQFgjhzXlIg+XaIpEAQZ85LCiTfDpEUCOLMeUmB5NshkgJBnDkvKZB8O0RSIIgz5yUFkm+HSAoEcea8pEDy7RBJgSDOnJcUSL4dIikQxJnzkgLJt0MkBYI4c15SIPl2iKRAEGfOSwok3w6RFAjizHlJgeTbIZICQZw5LymQfDtEUiCIM+clBZJvh0gKBHHmvKRA8u0QSYEgzpyXFEi+HSIpEMSZ85ICybdDJAWCOHNeUiD5doikQBBnzksKJN8OkRQI4sx5SYHk2yGSAkGcOS8pkHw7RFIgiDPnJQWSb4dICgRx5rykQPLtEEmBIM6clxRIvh0iKRDEmfOSAsm3QyQFgjhzXlIg+XaIpEAQZ85LCiTfDpEUCOLMeUmB5NshkgJBnDkvKZB8O0RSIIgz5yUFkm+HSAoEcea8pEDy7RBJgSDOnJcUSL4dIikQxJnzkgLJt0MkBYI4c15SIPl2iKRAEGfOSwok3w6RFAjizHlJgeTbIZICQZw5LymQfDtEUiCIM+clBZJvh0gKBHHmvKRA8u0QSYEgzpyXFEi+HSIpEMSZ85ICybdDJAWCOHNeUiD5doikQBBnzksKJN8OkRQI4sx5SYHk2yGSAkGcOS8pkHw7RFIgiDPnJQWSb4dICgRx5rykQPLtEEmBIM6clxRIvh0iKRDEmfOSAsm3QyQFgjhzXlIg+XaIpEAQZ85LCiTfDpEUCOLMeUmB5NshkgJBnDkvKZB8O0RSIIgz5yUFkm+HSAoEcea8pEDy7RBJgSDOnJcUSL4dIikQxJnzkgLJt0Mk/wWkp7P+002rW35ANLfkkhb4dnT2qpNnmteWvQOj1ZISPoRc4A+oyxkEmgdh9wAAAABJRU5ErkJggg==")
-      no-repeat center/100% 100%;
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIgAAACRCAYAAAAYY/ABAAAAAXNSR0IArs4c6QAABOlJREFUeF7t1E9olwUcx/Hn+flzjtFo5QK3JkYlURaElStsIEWdCoIivCT01yjoupkeFmgm3YIisTzkRRpCB6GDREVJ/0cHk6LMhG2GbbZYjN/mb3uiaESRbnyOvt+/6+/5HD6f7+t5ysKfC1xggdJ1/lnglv4Tl9bLFW82q5nHv9pzzW9uUxQCWVAwWNU2NMbeKYvi/rIoDq8+0f3A0FA5R0cikL8FbBgY21kW1fa1Xcu/+/70ueuqotz1+UvdOwRCX6Aoitv7Rx6uyvLg+qtXDL/25MrDz+ybuG/4x5n1ZVVt/nRPz9vkifBfkNueH7m5Nl8evXJlffzAc51vtbXU5qZn55c98sr4ltGJZud8rdr4xYs9X1ORoIH0bTt9xblq/stLWmsdbzzbuXdNZ316AcKp8WbbE6+Ob/29MT+5vKzd+tHurl+ISLBAbhj8pqW90XGkvqy8Y+fmy/ZvurH15/8C+OBYY9WOg78+1pyrPplqnbzn+OC6WRoSLJDebWOvl0W19dFN7Yeeurf92PkOv+/I1Lr97089VBXl3s92dz+NA9I7MFrRSi/07bu+9eOXt1z+3mL9+w+cvevD442+xZ67GP8v/wSyqqM+srarfupiLHi+Tm0risb2BzuOttRri74gs835ctehyY3TM0UrZaOTZ5o9IxPNNX8BWeqbRBnHnkXxwtDZO98dbtwtEDX87wICEcYFFxCIQASigXwBvyD5doikQBBnzksKJN8OkRQI4sx5SYHk2yGSAkGcOS8pkHw7RFIgiDPnJQWSb4dICgRx5rykQPLtEEmBIM6clxRIvh0iKRDEmfOSAsm3QyQFgjhzXlIg+XaIpEAQZ85LCiTfDpEUCOLMeUmB5NshkgJBnDkvKZB8O0RSIIgz5yUFkm+HSAoEcea8pEDy7RBJgSDOnJcUSL4dIikQxJnzkgLJt0MkBYI4c15SIPl2iKRAEGfOSwok3w6RFAjizHlJgeTbIZICQZw5LymQfDtEUiCIM+clBZJvh0gKBHHmvKRA8u0QSYEgzpyXFEi+HSIpEMSZ85ICybdDJAWCOHNeUiD5doikQBBnzksKJN8OkRQI4sx5SYHk2yGSAkGcOS8pkHw7RFIgiDPnJQWSb4dICgRx5rykQPLtEEmBIM6clxRIvh0iKRDEmfOSAsm3QyQFgjhzXlIg+XaIpEAQZ85LCiTfDpEUCOLMeUmB5NshkgJBnDkvKZB8O0RSIIgz5yUFkm+HSAoEcea8pEDy7RBJgSDOnJcUSL4dIikQxJnzkgLJt0MkBYI4c15SIPl2iKRAEGfOSwok3w6RFAjizHlJgeTbIZICQZw5LymQfDtEUiCIM+clBZJvh0gKBHHmvKRA8u0QSYEgzpyXFEi+HSIpEMSZ85ICybdDJAWCOHNeUiD5doikQBBnzksKJN8OkRQI4sx5SYHk2yGSAkGcOS8pkHw7RFIgiDPnJQWSb4dICgRx5rykQPLtEEmBIM6clxRIvh0iKRDEmfOSAsm3QyQFgjhzXlIg+XaIpEAQZ85LCiTfDpEUCOLMeUmB5NshkgJBnDkvKZB8O0RSIIgz5yUFkm+HSAoEcea8pEDy7RBJgSDOnJcUSL4dIikQxJnzkgLJt0Mk/wWkp7P+002rW35ANLfkkhb4dnT2qpNnmteWvQOj1ZISPoRc4A+oyxkEmgdh9wAAAABJRU5ErkJggg==") no-repeat center/100% 100%;
     display: none;
 
     img {

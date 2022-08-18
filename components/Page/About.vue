@@ -1,6 +1,6 @@
 <template>
   <div :class="'home-' + page" class="fp-page">
-    <img src="img/decoration.b195643.png" class="aside-decoration" />
+    <img src="/img/decoration.b195643.png" class="aside-decoration" />
     <div class="fp-page_wrap">
       <div class="home-about-cates">
         <div class="home-about-cates-wrap" v-for="(item, index) in aboutcates" :key="item"
@@ -39,7 +39,7 @@ onMounted(async () => {
   });
   res.value = data.value
   component.value = resolveComponent('PageAboutIntro')
-  cateChange(2)
+  cateChange(0)
 })
 
 let cateActive = ref([]);

@@ -71,6 +71,7 @@ watch(
   () => useRoute().query.page,
   (nextPage) => {
     isRender.value = isNotIndexPge(nextPage);
+    // 标记
     if (nextPage == 'join') {
       isRender.value = false;
     }
