@@ -20,7 +20,7 @@
         <div class="centered-container"></div>
         <ul class="timeline-list" :style="style">
           <li v-for="(item, index) in yearsEvents" class="timeline-item"
-            :class="[item.sExt.fp == 1 ? 'hasYear' : '', 'index-' + index]" :key="index" @click="navTo(index)">
+            :class="[item.sExt.fp == true ? 'hasYear' : '', 'index-' + index]" :key="index" @click="navTo(index)">
             <div class="timeline-item__year" v-if="item.sExt.fp">
               <span> {{ item.sCategoryName }} </span>
             </div>

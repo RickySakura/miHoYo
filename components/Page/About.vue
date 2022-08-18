@@ -34,7 +34,7 @@ let res = ref("")
 onMounted(async () => {
   // 生产模式
   let url = "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-b02b7f48-0227-438f-8c3a-3a5f94afa017/68d7f4e4-fa61-4cb6-8784-5e4a3eba89b2.json"
-  const { data } = await useFetch(url, {
+  const { data } = await useFetch("/public/data/mihoyo.json", {
     pick: ["yearsEvents", "introRes", "visionRes", "yearsHonor"],
   });
   res.value = data.value
