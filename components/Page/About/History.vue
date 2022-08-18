@@ -21,7 +21,7 @@
         <ul class="timeline-list" :style="style">
           <li v-for="(item, index) in yearsEvents" class="timeline-item"
             :class="[item.sYear != null ? 'hasYear' : '', 'index-' + index]" :key="index" @click="navTo(index)">
-            <div class="timeline-item__year" v-if="item.sYear">
+            <div class="timeline-item__year" v-if="item.sYear != null">
               <span> {{ item.sYear }} </span>
             </div>
             <div class="timeline-item__event">
