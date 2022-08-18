@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview"
+  },
+  "devDependencies": {
+    "nuxt": "3.0.0-rc.1"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "less": "^4.1.2",
+    "less-loader": "^10.2.0",
+    "nuxi": "^3.0.0-rc.3",
+    "swiper": "^5.0.0"
+  }
+}
