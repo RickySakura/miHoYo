@@ -63,6 +63,53 @@ NodeJS：不必多说。<br />MongoDB：和Node和前端相形最好的文档型
 ```
 这个需求不仅仅是在about页面用到，其他页面和小组件也有，是很常用的方法，需要牢记。
 <a name="Otl5r"></a>
+
+## 四、滑动导航栏偏移量记录算法
+![image.png](https://cdn.nlark.com/yuque/0/2022/png/2494810/1660050622419-79be4512-7704-441e-bf4b-f51c976333aa.png#clientId=ub03b7342-1525-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=603&id=u0dd38289&margin=%5Bobject%20Object%5D&name=image.png&originHeight=754&originWidth=1197&originalType=binary&ratio=1&rotation=0&showTitle=false&size=369636&status=done&style=none&taskId=u0492c179-fa9b-4a49-87ba-6ec070bc65c&title=&width=957.6)<br />最初的起始偏移量为186px，即transform: translateX(186px)，后续所有子块的滑动距离都是在这个基础上计算的。计算方式为：当前偏移量-子块自身宽度 = X - offsetX
+<a name="riE9j"></a>
+## 五、好用的 transition 组件
+在 Nuxt 中你仍然可以使用 vue 中的transition组件，来帮助页面转换中的过渡，使用方式和vue中一样，将需要过渡的元素包裹在 <transiton></transition>组件之间，然后设置以下四个样式：
+```css
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+```
+然后就有过渡效果了。
+<a name="clO4r"></a>
+#### 对于米哈游官网的优化
+使用 vue 的 transition 组件，将官网 about 页面的子组件过渡做了优化，在从发展历程块切换到别的块的时候不会再闪现第一个swiper-slide块了（实际表现是Fly me 2 the moon那个大图）。<br />**旧版：**<br />![image.png](https://cdn.nlark.com/yuque/0/2022/png/2494810/1660719703454-f17087bd-e9d6-4525-9022-7b95d0361fae.png#clientId=ue67fca6b-482a-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=598&id=u9fd077c9&margin=%5Bobject%20Object%5D&name=image.png&originHeight=747&originWidth=1127&originalType=binary&ratio=1&rotation=0&showTitle=false&size=427746&status=done&style=none&taskId=udba53cd8-0581-4e69-a2c6-ada0b906b07&title=&width=901.6)<br />**我的改良版：**<br />![image.png](https://cdn.nlark.com/yuque/0/2022/png/2494810/1660719743643-036562ef-3001-4166-839f-b2030f53ce72.png#clientId=ue67fca6b-482a-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=582&id=u1c080ff1&margin=%5Bobject%20Object%5D&name=image.png&originHeight=727&originWidth=1077&originalType=binary&ratio=1&rotation=0&showTitle=false&size=400674&status=done&style=none&taskId=u942a3807-a241-407a-9ae2-3415d6d32e7&title=&width=861.6)<br />现在会正确的从当前发展历程正在展示的图片直接过渡到其他块，而不会再闪现一下第一张图。
+<a name="S0JSO"></a>
+## 六、flex布局中使用position:absolute
+在display:flex布局中，如果我们希望元素排在一行，可以使用这个布局，然后如果子元素设置了position: absolute且父元素设置了 position: relative（子绝父相），那么这个元素将不参与 flex 布局的宽度/高度分配，但是仍然享有 flex 的特性，即浮动效果。<br />![image.png](https://cdn.nlark.com/yuque/0/2022/png/2494810/1660726886898-fd4e647f-9fe5-49ae-8fb1-37cf1d94f8f0.png#clientId=ubdb004a5-fb83-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=408&id=u910cd853&margin=%5Bobject%20Object%5D&name=image.png&originHeight=510&originWidth=942&originalType=binary&ratio=1&rotation=0&showTitle=false&size=91964&status=done&style=none&taskId=uc6e0bff0-388b-44b9-b652-f149a63d03f&title=&width=753.6)<br />图中，黄块本来应该在箭头指示位置，因为他是 flex 布局中的第二个子元素，但是设置了 绝对定位后，就不占有原来的空间了，会分配给其他flex子元素。
+<a name="TWgtJ"></a>
+#### 利用特性
+使用这个特性，可以很方便的给 flex 布局添加顶部导航，侧边栏，底部按钮等功能：<br />![image.png](https://cdn.nlark.com/yuque/0/2022/png/2494810/1660727043885-ec1e39e6-3df2-4a62-a030-bd38cdf210ef.png#clientId=ubdb004a5-fb83-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=494&id=ua66a29af&margin=%5Bobject%20Object%5D&name=image.png&originHeight=618&originWidth=1212&originalType=binary&ratio=1&rotation=0&showTitle=false&size=234058&status=done&style=none&taskId=u4f079a32-0c02-41ef-a366-62802ef23c2&title=&width=969.6)<br />图中，框框里的就是 flex 布局中的绝对定位做的。
+
+<a name="sFwaZ"></a>
+## 七* 手动实现过渡效果
+关于这一点是一个很麻烦的过程，但其实搞懂了顺序之后就还好。首先，要明确整个过渡发生了什么，简单概括一下一个元素的过渡：
+
+1. 先为元素添加 过渡中的样式类 .active，这里一般是设置过渡属性transition的时机，根据情况不同还可以分别设置 .leave-active 和 .enter-active 分别对应离开或进入时的过渡效果；
+1. 为元素添加过渡后的样式类 .leave-to/enter-to，进入或者出去后的最终样式；
+1. 与第1，2步间隔合适的时间后（可以使用setTimeout）等待过渡结束后再删除 .leave-to/.enter-to 类 ，比如过渡时间为500ms，则设置500ms后的定时器来删除类。
+1. 创建定时器，等待第3步的过渡时间，间隔一段时间后，删除 .active 类，（可选）此处也可按情况分为 .leave-active 和 .enter-active，如果分开了的话就删除当前的 active类，并添加另一个类，比如删除 .leave-active 添加 .enter-active，然后再创建定时器，删除当前 active 类。
+
+**_原理：_由active设置过渡类型，然后添加样式类，此时元素因获得新样式产生过渡，然后删除过渡类，元素因失去类导致变回原样式，又会产生过渡，最后删除 active 即可。**<br />关于如何添加或删除类：可以用原生方法，或者vue，只要能改都可以。<br />大部分的过渡都是这个过程，只要理清楚就行。<br />![image.png](https://cdn.nlark.com/yuque/0/2022/png/2494810/1660749887130-912734d0-6c8e-4ced-9c5c-cfaad1fd7d1f.png#clientId=u2b5da035-69c7-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=363&id=ue16ff0e3&margin=%5Bobject%20Object%5D&name=image.png&originHeight=561&originWidth=832&originalType=binary&ratio=1&rotation=0&showTitle=false&size=62293&status=done&style=none&taskId=u1272742f-03dc-4838-b837-e455451977d&title=&width=538.6000366210938)
+<a name="fSyJd"></a>
+#### 实例
+![image.png](https://cdn.nlark.com/yuque/0/2022/png/2494810/1660752457679-2509b17f-a483-4d83-a87d-6f177698f7d5.png#clientId=u2b5da035-69c7-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=1214&id=u37e3c937&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1518&originWidth=830&originalType=binary&ratio=1&rotation=0&showTitle=false&size=205725&status=done&style=none&taskId=ub8ed3b29-f8f0-4248-a490-1ca8394935e&title=&width=664)
+<a name="yqP3d"></a>
+#### 补充：记得清除定时器
+否则再连续过渡几个时，会产生串生，本来不应该消失的消失了。<br />![image.png](https://cdn.nlark.com/yuque/0/2022/png/2494810/1660752762369-3e1a9482-0a9e-4a92-ae78-87d43522aeac.png#clientId=u2b5da035-69c7-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=758&id=u2c0284ca&margin=%5Bobject%20Object%5D&name=image.png&originHeight=948&originWidth=810&originalType=binary&ratio=1&rotation=0&showTitle=false&size=150659&status=done&style=none&taskId=u9a3c82d1-12ac-4abc-a694-074175bccd7&title=&width=648)
+<a name="Otl5r"></a>
+
+
 ## Nuxt3使用笔记
 1.**public目录**下的文件会被一起打包进.output/_nuxt中，也就是可以直接在生产环境中使用，而assets中的文件则不会被一起打包，不能直接在生产环境使用。所以，**包括字体，图片，音频等需要由浏览器自动下载的文件，最好就放在 public/ 目录下！**<br />2.通过调用useFetch()方法获取的数据，在页面加载后可以在devtools中的，window.__NUXT__.data 中看到：<br />![image.png](https://cdn.nlark.com/yuque/0/2022/png/2494810/1659408296710-af02c338-bbbf-467c-a28b-5a97cdada984.png#clientId=uacca9755-0bf2-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=194&id=uee98b326&margin=%5Bobject%20Object%5D&name=image.png&originHeight=242&originWidth=701&originalType=binary&ratio=1&rotation=0&showTitle=false&size=19572&status=done&style=none&taskId=u41cc49bf-938f-443c-8618-6a43757c267&title=&width=560.8)
 
