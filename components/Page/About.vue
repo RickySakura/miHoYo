@@ -25,17 +25,20 @@
 </template>
 
 <script setup>
+
 const page = "about";
 let aboutcates = ["关于米哈游", "发展历程", "荣誉资质"];
 let component = ref("")
-let components = ["PageAboutIntro", "PageAboutHistory", "PageAboutHonor"]
 let res = ref("")
 
 onMounted(async () => {
-  const { data } = await useFetch("/data/mihoyo.json", {
+  // 生产模式
+  let url = "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-b02b7f48-0227-438f-8c3a-3a5f94afa017/68d7f4e4-fa61-4cb6-8784-5e4a3eba89b2.json"
+  const { data } = await useFetch(url, {
     pick: ["yearsEvents", "introRes", "visionRes", "yearsHonor"],
   });
   res.value = data.value
+
   component.value = resolveComponent('PageAboutIntro')
   cateChange(0)
 })
