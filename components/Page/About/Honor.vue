@@ -47,19 +47,17 @@ let translate = 0
 
 // 分页逻辑
 let pageCount = 8         // 一页展示的数据条目
-let pageSum = 0           // 总页数
 let pageIndex = 1         // 当前所在页码
 // 预处理 用于 v-for
 let data = []
 yearsHonor.forEach((item, index) => {
   let origin = [...item.list]
-  let y = item.y
   let list = []
-  pageSum = Math.ceil(origin.length / pageCount)
-  for (let i = 0; i < pageSum; i++) {
+  let count = Math.ceil(origin.length / pageCount)  // 不要把Math直接放在for的判断中，因为一次循环后 Math 会重新计算结果，导致循环次数变了
+  for (let i = 0; i < count; i++) {
     list.push(origin.splice(0, 8))
   }
-  data.push({ y, list })
+  data.push({ y: item.y, list })
 })
 let showList = ref(data[0].list)  // 当前展示荣誉数据的列表,初始化默认第一个
 // 换页的方法
@@ -68,7 +66,7 @@ function next() {
   translate += dom.clientWidth
   dataTrans.value = `transform:translateX(-${translate}px)`
   pageIndex++
-  if (pageIndex == pageSum) {
+  if (pageIndex == showList.value.length) {
     document.querySelector(".about-honor-btns__next").classList.add('disabled')
   }
   if (pageIndex > 1) {
@@ -83,7 +81,7 @@ function prev() {
   if (pageIndex == 1) {
     document.querySelector(".about-honor-btns__prev").classList.add('disabled')
   }
-  if (pageIndex < pageSum) {
+  if (pageIndex < showList.value.length) {
     document.querySelector(".about-honor-btns__next").classList.remove('disabled')
   }
 }
