@@ -61,7 +61,6 @@ let activeNav = () => {
 }; // 记录当前活跃的是哪一个nav
 onMounted(() => {
   yearsEvents.value = props.res.yearsEvents   // 这一步的目的是让swiper尽快渲染，就不会让所有图片在页面上一闪而过了
-  console.log(yearsEvents.value);
   swiper = new Swiper(".event-swiper", {
     observer: true, // 修改swiper自己或子元素时，自动初始化swiper,也就是响应式
     observeParents: true, // 修改swiper的父元素时，自动初始化swiper

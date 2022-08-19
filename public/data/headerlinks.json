@@ -1,0 +1,22 @@
+[
+  {
+    "title": "首页",
+    "path": "/"
+  },
+  {
+    "title": "产品信息",
+    "path": "product"
+  },
+  {
+    "title": "了解我们",
+    "path": "about"
+  },
+  {
+    "title": "加入我们",
+    "path": "join"
+  },
+  {
+    "title": "新闻动态",
+    "path": "news"
+  }
+]
