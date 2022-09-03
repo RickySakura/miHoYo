@@ -31,12 +31,6 @@ definePageMeta({
   layout: false,
 });
 
-// watch(useState("pageShow"), (v) => {
-//   if (v == true)
-//     document.querySelector(".view").classList.remove("hide")
-// })
-
-
 // 所有子组件所需要的数据请求
 let links = ref([]);
 let paths = ref([]);
