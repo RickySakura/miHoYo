@@ -1,5 +1,5 @@
 <template>
-  <div class="view">
+  <div class="view hide">
     <NuxtLayout name="mi-layout">
       <template #header>
         <LazyMiHeader :links="links" @click="linkMatchRoute" ref="miheader" />
@@ -15,10 +15,10 @@
         <PageAbout />
       </template>
       <template #join>
-        <PageJoin />
+        <PageJoin :values-res="valuesRes" />
       </template>
       <template #news>
-        <PageNews />
+        <PageNews :news-res="newsRes" />
       </template>
     </NuxtLayout>
     <!-- <NavBar /> -->
@@ -31,20 +31,34 @@ definePageMeta({
   layout: false,
 });
 
+// watch(useState("pageShow"), (v) => {
+//   if (v == true)
+//     document.querySelector(".view").classList.remove("hide")
+// })
+
+
+// 所有子组件所需要的数据请求
 let links = ref([]);
 let paths = ref([]);
 let miheader = ref(null);
+let valuesRes = ref(null);  // join页面数据
+let newsRes = ref(null)// news页面数据
 onMounted(async () => {
-  // router.push('/?page=about')
-  // const { data } = await useFetch('/assets/headerlinks.json')   // 开发环境
   const { data } = await useFetch("/data/headerlinks.json"); // 生产环境
-  // const { data } = await useFetch('https://vkceyugu.cdn.bspapp.com/VKCEYUGU-b02b7f48-0227-438f-8c3a-3a5f94afa017/6b7d01eb-6611-4cf6-b052-b2312630cd3d.json')
   data.value.forEach((item) => {
     links.value.push(item.title);
     paths.value.push(item.path);
   });
+  const { data: res } = await useFetch("/data/mihoyo.json")
+  useState("localText").value = res.value.localText
+  valuesRes.value = res.value.valuesRes
+  newsRes.value = res.value.newsRes.list
   routeMatchLink();
+  setTimeout(() => {
+    document.querySelector(".view").classList.remove("hide")
+  }, 8)
 });
+
 // 点击头部导航栏链接后切换路由
 function linkMatchRoute(index) {
   // 如果是个网络链接就开一个新窗口
@@ -83,8 +97,7 @@ useFaded.value = function (className, isRender) {
   isRender.value = false;
   let current_page = useRoute().query.page;
   function isNotIndexPage(p) {
-    // 标记
-    if (p != undefined && p != 'join') {
+    if (p != undefined) {
       return true;
     } else {
       return false;
@@ -130,5 +143,9 @@ useFaded.value = function (className, isRender) {
   background: #f8f9fb url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAAAAXNSR0IArs4c6QAAAFVJREFUSEtjfPn+238GJMDBxozMJZn949dfuB5GkOHiglyMJJtChIYhbPjHrz//83Oz0yZYRg3HlngYR4NlNFiIKFUgSkZTC9agGg0W7MEyWs1hCxcAF5pe5Ya82ZoAAAAASUVORK5CYII=) repeat center center/0.23rem 0.23rem;
   // min-width: 100%;
   // min-height: 100%;
+}
+
+.hide {
+  visibility: hidden;
 }
 </style>

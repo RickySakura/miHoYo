@@ -6,10 +6,9 @@
         <div class="home-about-cates-wrap" v-for="(item, index) in aboutcates" :key="item"
           @mouseenter="cateHover(index)" @mouseleave="cateReset(index)" @click="cateChange(index)"
           :class="clickIndex == index ? 'home-about-cates-wrap--active' : ''">
-          <!-- <div class="home-about-cate" style="height: 0.3rem; overflow: hidden"> -->
           <div class="home-about-cate-wrap" :style="cateActive[index]">
             <div class="span-wrapper" v-for="(it, i) in 3" :class="i == 1 ? 'active' : ''">
-              <span>{{ item }}</span>
+              <span>{{  item  }}</span>
             </div>
           </div>
           <!-- </div> -->
@@ -152,7 +151,6 @@ function cateRoute(index) {
     top: 50%;
     width: 1px;
     height: 0.18rem;
-    // background-color: #707173;
     background: #707173;
     transform: translateY(-50%);
   }

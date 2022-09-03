@@ -9,8 +9,8 @@
         <div class="about-honor-container__data" :style="dataTrans">
           <div class="about-honor-list" v-for="(list, index) in showList" :key="index">
             <div class="about-honor-item" v-for="(item, cIndex) in list">
-              <div class="about-honor-item__title">{{ item.label }}</div>
-              <div class="about-honor-item__origin"> {{ item.origin }}</div>
+              <div class="about-honor-item__title">{{  item.label  }}</div>
+              <div class="about-honor-item__origin"> {{  item.origin  }}</div>
             </div>
           </div>
         </div>
@@ -23,7 +23,7 @@
         <div class="swiper-container about-honor-swiper">
           <div class="swiper-wrapper">
             <div class="swiper-slide" v-for="(item, index) in data" @click="navTo(index)">
-              <div class="about-honor-year" :class="active == index ? 'about-honor-year--active' : ''">{{ item.y }}
+              <div class="about-honor-year" :class="active == index ? 'about-honor-year--active' : ''">{{  item.y  }}
               </div>
             </div>
             <span class="line" :style="lineTrans">
@@ -282,7 +282,6 @@ onMounted(() => {
   .about-honor-container__tool {
     position: absolute;
     right: 0;
-    // top: 0.4rem;  // 标记
     width: 1rem;
     height: 100%;
     border-left: 1px solid #2c2c2c;

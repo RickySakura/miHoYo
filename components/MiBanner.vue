@@ -20,18 +20,18 @@
           <div class="mibanner__info">
             <div class="mibanner__info-name">
               <img v-if="item.name.img" :src="item.name.img" alt class="mibanner__info-name-img" />
-              <div v-else style="font-weight: bold">{{ item.name.cnname }}</div>
-              <span class="enname anim">{{ item.name.enname }}</span>
+              <div v-else style="font-weight: bold">{{  item.name.cnname  }}</div>
+              <span class="enname anim">{{  item.name.enname  }}</span>
             </div>
             <div class="mibanner__info-slash"></div>
             <div class="mibanner__info-desc">
-              <p v-for="desc in item.desc">{{ desc }}</p>
+              <p v-for="desc in item.desc">{{  desc  }}</p>
             </div>
             <div class="mibanner__info-socials" v-if="item.socials || item.socials.length > 0">
               <div v-for="(social, index) in item.socials" @click="goblank(datasets[activeIndex].socials[index].href)"
                 class="mibanner__info-social">
                 <span>
-                  {{ social.title }}
+                  {{  social.title  }}
                   <div class="mibanner__info-social-qrcode" v-if="social.qrcode">
                     <img :src="social.qrcode" alt="miHoYo" />
                   </div>
@@ -153,10 +153,10 @@ function slideWithMouse(e) {
   translate = -0.05 * e.pageX + 38.4; // box中的轮播大图最终位移位置
   let trans_board = -0.015 * e.pageX + 11.52; // board中背景小图的最终位移位置
   style.value = `transform: translate(${translate}px, 0); transition: transform ${transition_duration}ms cubic-bezier(0,.3,.5,1);`;
-  boardstyle.value = `transform: translate3d(${trans_board}px, 0px, 0px) scale(1.2, 1.2); backface-visibility: hidden; transform-style: preserve-3d;transition: transform ${600}ms cubic-bezier(0,.3,.5,1)`;
+  boardstyle.value = `transform: translate3d(${trans_board}px, 0px, 0px) scale(1.2, 1.2); backface-visibility: hidden; transform-style: preserve-3d;transition: transform 600ms cubic-bezier(0,.3,.5,1)`;
   pause(transition_duration);
 }
-// 徐娅向外公开的变量
+// 向外公开的变量
 defineExpose({
   slideTo,
 });

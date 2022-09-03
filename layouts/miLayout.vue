@@ -75,8 +75,8 @@ function init() {
           ""
         ); // 当前活跃页
 
-        useState("homePage").value = page;                   //修改当前活跃页面的状态
-        useState("pageIndex").value = mySwiper.activeIndex   //修改当前活跃页面的状态
+        useState("homePage").value = page; //修改当前活跃页面的状态
+        useState("pageIndex").value = mySwiper.activeIndex; //修改当前活跃页面的状态
         page = page == "index" ? "" : "/?page=" + page;
         useRouter().push(page);
       },
@@ -109,7 +109,7 @@ function routeMatch(speed = 0) {
   }
 }
 // 创建监听器，监听路由的变化，重新将slide导航到对应的位置
-let asideImg = ref(true)
+let asideImg = ref(true);
 onMounted(() => {
   const swiper = init();
   routeMatch();
@@ -120,15 +120,29 @@ onMounted(() => {
     ({ page }) => {
       routeMatch(500);
       // 让左侧边栏图片在 index product 页面不显示
-      // 标记
-      if (page == undefined || page == 'product' || page == 'join') {
-        asideImg.value = false
+      if (page == undefined || page == "product") {
+        asideImg.value = false;
       } else {
-        asideImg.value = true
+        asideImg.value = true;
       }
     }
   );
 });
+
+// 监听 news 页面子 swiper 的进程，如果到黑块了则停止该swiper响应鼠标滚动
+watch(() => useState('newsSwiperProgress').value, (v) => {
+  if (v.toFixed(0) == -1) {
+    document.querySelector(".aside-slogan").classList.add("aside-fade")
+    document.querySelector(".aside-scroll").classList.add("aside-fade")
+    mySwiper.mousewheel.disable();
+  } else {
+    document.querySelector(".aside-slogan").classList.remove("aside-fade")
+    document.querySelector(".aside-scroll").classList.remove("aside-fade")
+    setTimeout(() => {
+      mySwiper.mousewheel.enable();
+    })
+  }
+})
 
 // 使用全局淡出方法，当页面进入到主页时，移除侧边标语和鼠标滚动条 aside-slogan/ aside-scroll
 let isRender = ref(false);
@@ -215,6 +229,11 @@ img {
   position: absolute;
   left: 0.8rem;
   bottom: 0.38rem;
+  transition: all 300ms;
+}
+
+.aside-fade {
+  opacity: 0;
 }
 
 .aside-slogan__line {
@@ -275,5 +294,11 @@ img {
   height: 0.8rem;
   margin-top: 0.1rem;
   border-right: 2px solid #333;
+}
+
+.black {
+  width: 100%;
+  height: 10rem;
+  background-color: black;
 }
 </style>

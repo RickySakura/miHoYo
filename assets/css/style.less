@@ -58,7 +58,16 @@ li {
 video {
   object-fit: contain;
 }
-
+.container *{
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  user-select: none; 
+  -webkit-touch-callout: none;
+  outline: none;
+  border: none;
+}
 .swiper-container {
   margin-left: auto;
   margin-right: auto;
@@ -264,3 +273,6 @@ video {
   opacity: 1;
 }
 
+.swiper-container-vertical > .swiper-wrapper{
+  flex-direction: column;
+}

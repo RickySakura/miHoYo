@@ -1,5 +1,5 @@
 <template>
-  <div class="header" v-if="isRender">
+  <header class="header" v-if="isRender">
     <div class="header__navwrap">
       <div class="header__navbar">
         <div class="header__navbar-logo">
@@ -24,7 +24,7 @@ click(index);
         </div>
       </div>
     </div>
-  </div>
+  </header>
 </template>
 
 <script setup>
@@ -71,10 +71,6 @@ watch(
   () => useRoute().query.page,
   (nextPage) => {
     isRender.value = isNotIndexPge(nextPage);
-    // 标记
-    if (nextPage == 'join') {
-      isRender.value = false;
-    }
   }
 );
 </script>
