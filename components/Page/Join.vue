@@ -1,6 +1,6 @@
 <template>
   <div :class="'home-' + page" class="fp-page" @mousemove="slideWithMouse">
-    <img src="img/decoration.560b085.png" class="aside-decoration" />
+    <img src="/img/decoration.560b085.png" class="aside-decoration" />
     <div class="wrapper">
       <div class="banner">
         <div class="banner__role">
