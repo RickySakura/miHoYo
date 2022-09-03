@@ -29,7 +29,7 @@
         <div class="join-jobs-tabs">
           <div class="join-jobs-tabs-wrap">
             <div class="join-jobs-tab join-jobs-tab--active">
-              <div class="span-wrapper" v-for="(it, i) in 3">
+              <div class="span-wrapper" v-for="(it, i) in [1, 2, 3]">
                 <span>{{ localText.socialBtn }}</span>
               </div>
             </div>
@@ -58,7 +58,7 @@
         <div class="more-btn" @click="goTo('https://jobs.mihoyo.com/#/jobs')">全部职位</div>
       </div>
       <div class="join-weal home-join-container none">
-        <div class="join-weal-card" v-for="(item, index) in $attrs['values-res'].list"
+        <div class="join-weal-card" v-for="(item, index) in $attrs['values-res'].list" :key="index"
           :class="{ hasContent: hasContent(item) }">
           <div class="join-weal-card__number" :style="`background-image: url(${item.bg})`"></div>
           <div class="weal-btn" v-if="hasContent(item)">
@@ -69,23 +69,21 @@
           <div class="join-weal-card__brief">
             <div class="join-weal-card__title">{{ item.title }}</div>
             <div class="join-weal-card__info">
-              <div class="join-weal-card__info-subtitle" v-for="subtitle in item.cards">
+              <div class="join-weal-card__info-subtitle" v-for="(subtitle, ind) in item.cards" :key="ind">
                 {{ subtitle.subTitle }}
               </div>
             </div>
           </div>
           <div class="join-weal-card__desc" :class="['col' + item.cards.length]">
-            <div v-for="sub in   item.cards" :key="sub">
+            <div v-for="(sub, is) in item.cards" :key="is">
               <div class="join-weal-card__desc-subtitle">{{ sub.subTitle }}</div>
               <div class="join-weal-card__desc-content">
                 <p v-html="sub.content"></p>
               </div>
             </div>
           </div>
-
         </div>
       </div>
-
     </div>
   </div>
 
@@ -94,15 +92,15 @@
 <script setup>
 const page = "join";
 let ready = ref(false)
+let localText = useState("localText")
 watch(() => useState("localText"), () => {
   ready.value = true
 })
-let localText = useState("localText")
 
 let jobsList = ref(null)
 let listReady = ref(false)
 onMounted(async () => {
-  const { data, pending } = await useFetch("https://api.mokahr.com/api-platform/v1/jobs-groupedby-zhineng/mihoyo?mode=social&siteId=42280")
+  let { data, pending } = await useFetch("https://api.mokahr.com/api-platform/v1/jobs-groupedby-zhineng/mihoyo?mode=social&siteId=42280")
   jobsList.value = data.value
   listReady.value = !pending.value
 })
@@ -120,7 +118,7 @@ function tabReset({ target }) {
     target.firstChild.style.transform = "translateY(-0.6rem)"
   }, 300)
 }
-function goTo(url) { window.open(url) }
+function goTo(url) { window.open(url, "_blank") }
 
 let lineTrans = ref("")
 function tabChange(num, { target }) {
@@ -138,7 +136,6 @@ function tabChange(num, { target }) {
     document.querySelector(".join-weal").classList.remove("join-weal--active")
     document.querySelector(".join-weal").classList.add("none")
     document.querySelector(".join-jobs").classList.remove("none")
-
   }
 }
 function hasContent(item) {

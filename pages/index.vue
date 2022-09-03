@@ -37,12 +37,17 @@ let paths = ref([]);
 let miheader = ref(null);
 let valuesRes = ref(null);  // join页面数据
 let newsRes = ref(null)// news页面数据
+async function getData(url) {
+  let { data } = await useFetch(url)
+  return data
+}
 onMounted(async () => {
   const { data } = await useFetch("/data/headerlinks.json"); // 生产环境
   data.value.forEach((item) => {
     links.value.push(item.title);
     paths.value.push(item.path);
   });
+  // let res = await getData("/data/mihoyo.json")
   const { data: res } = await useFetch("/data/mihoyo.json")
   useState("localText").value = res.value.localText
   valuesRes.value = res.value.valuesRes
