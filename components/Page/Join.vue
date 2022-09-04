@@ -43,8 +43,9 @@
             </div>
           </div>
         </div>
+        <!-- <div v-if="listReady"></div> -->
         <div class="join-jobs-list">
-          <div class="join-jobs-list-item" v-for="(item, index) in jobsList.jobs" :key="index" v-if="listReady">
+          <div class="join-jobs-list-item" v-for="(item, index) in jobsList.jobs" :key="index">
             <div class="join-jobs-list-item__icon" @click="goTo('https://jobs.mihoyo.com/#/jobs?zhineng=' + item.id)">
               <img :src="localText['moka-' + item.id]" alt="miHoYo">
               <div class="join-jobs-list-item__icon--hover">
@@ -91,19 +92,22 @@
 
 <script setup>
 const page = "join";
+const props = defineProps(["jobsList"])
 let ready = ref(false)
-let localText = useState("localText")
-watch(() => useState("localText"), () => {
+let localText = ref(null)
+
+watch(()=>useState("localText"), (v) => {
+  localText.value = v.value
   ready.value = true
 })
 
-let jobsList = ref(null)
+// let jobsList = ref(null)
 let listReady = ref(false)
-onMounted(async () => {
-  let { data, pending } = await useFetch("https://api.mokahr.com/api-platform/v1/jobs-groupedby-zhineng/mihoyo?mode=social&siteId=42280")
-  jobsList.value = data.value
-  listReady.value = !pending.value
-})
+// onMounted(async () => {
+//   let { data,pending } = await useFetch("https://api.mokahr.com/api-platform/v1/jobs-groupedby-zhineng/mihoyo?mode=social&siteId=42280")
+//   jobsList.value = data.value
+//   listReady.value = pending.value
+// })
 
 let timeTask = null
 function tabHover({ target }) {
@@ -118,7 +122,7 @@ function tabReset({ target }) {
     target.firstChild.style.transform = "translateY(-0.6rem)"
   }, 300)
 }
-function goTo(url) { window.open(url, "_blank") }
+function goTo(url) { window.open(url, "_blank") }   // 无关
 
 let lineTrans = ref("")
 function tabChange(num, { target }) {
@@ -233,7 +237,6 @@ function slideWithMouse(e) {
     width: 9.2rem;
     height: 100%;
     -webkit-transform-origin: center;
-    -ms-transform-origin: center;
     transform-origin: center;
     -webkit-transform: scale(1.08);
     transform: scale(1.08);
@@ -246,11 +249,8 @@ function slideWithMouse(e) {
     right: 6.26rem;
     width: 5.18rem;
     height: 100%;
-    -webkit-transform-origin: center;
-    -ms-transform-origin: center;
     transform-origin: center;
     -webkit-transform: scale(1.13);
-    -ms-transform: scale(1.13);
     transform: scale(1.13);
   }
 }
@@ -263,7 +263,6 @@ function slideWithMouse(e) {
 }
 
 .home-join-tabs {
-  // background-color: orange;
   min-width: 1.6rem;
   position: relative;
   white-space: nowrap;
@@ -283,11 +282,9 @@ function slideWithMouse(e) {
     height: .32rem;
     background: #3778e5;
     -webkit-transform: translateY(0);
-    -ms-transform: translateY(0);
     transform: translateY(0);
     -webkit-transition: -webkit-transform 500ms ease-out;
     transition: -webkit-transform 500ms ease-out;
-    -o-transition: transform 500ms ease-out;
     transition: transform 500ms ease-out;
     transition: transform 500ms ease-out, -webkit-transform 500ms ease-out;
   }
@@ -425,13 +422,10 @@ function slideWithMouse(e) {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   -webkit-box-pack: start;
-  -ms-flex-pack: start;
   justify-content: flex-start;
   -webkit-box-align: start;
-  -ms-flex-align: start;
   align-items: flex-start;
   width: 100%;
   align-self: center;
@@ -451,7 +445,6 @@ function slideWithMouse(e) {
     margin-bottom: .45rem;
     cursor: pointer;
     -webkit-transition: color 500ms;
-    -o-transition: color 500ms;
     transition: color 500ms;
 
     &:hover {
@@ -476,7 +469,6 @@ function slideWithMouse(e) {
 
     img {
       -webkit-transition: opacity 500ms;
-      -o-transition: opacity 500ms;
       transition: opacity 500ms;
     }
   }
@@ -489,7 +481,6 @@ function slideWithMouse(e) {
     height: 0;
     overflow: hidden;
     -webkit-transition: height 500ms ease-out;
-    -o-transition: height 500ms ease-out;
     transition: height 500ms ease-out;
 
     img {
@@ -519,7 +510,6 @@ function slideWithMouse(e) {
 }
 
 .more-btn {
-  -ms-flex-item-align: end;
   align-self: flex-end;
   width: 1.7rem;
   height: .34rem;
