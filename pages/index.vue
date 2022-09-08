@@ -40,10 +40,10 @@ let jobslist = ref({})
 let newsRes = ref(null)// news页面数据
 onMounted(async () => {
   const { data: res , pending } = await useFetch("/data/mihoyo.json")
+  useState("localText").value = res.value.localText
   let { data:jobs } = await useFetch("https://api.mokahr.com/api-platform/v1/jobs-groupedby-zhineng/mihoyo?mode=social&siteId=42280")
   const { data } = await useFetch("/data/headerlinks.json"); // 生产环境
 
-  useState("localText").value = res.value.localText
 
   data.value.forEach((item) => {
     links.value.push(item.title);

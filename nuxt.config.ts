@@ -14,7 +14,10 @@ export default defineNuxtConfig({
         // <link rel="stylesheet" href="https://myawesome-lib.css">
         { rel: 'icon', href: 'https://www.mihoyo.com/favicon.ico' }
       ],
-      title: "米哈游-TECH OTAKUS SAVE THE WORLD"
+      title: "米哈游-TECH OTAKUS SAVE THE WORLD",
+      script: [
+        { src: "https://hm.baidu.com/hm.js?0f4bc81eb22a23afd6aa4a27c2fc91ee" }
+      ]
     }
   },
   nitro: {

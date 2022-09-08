@@ -44,13 +44,13 @@
   </div>
   <slot name="video"></slot>
 </template>
+
 <script setup>
 // 这个布局通过第一个 div 的类名来修改路由
 import Swiper from "swiper";
 // definePageMeta({
 //   keepalive: true,
 // });
-
 console.warn = () => { };
 let mySwiper = null;
 // 方法

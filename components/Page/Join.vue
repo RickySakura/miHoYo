@@ -96,13 +96,13 @@ const props = defineProps(["jobsList"])
 let ready = ref(false)
 let localText = ref(null)
 
-watch(()=>useState("localText"), (v) => {
+watch(() => useState("localText"), (v) => {
   localText.value = v.value
   ready.value = true
 })
 
 // let jobsList = ref(null)
-let listReady = ref(false)
+// let listReady = ref(false)
 // onMounted(async () => {
 //   let { data,pending } = await useFetch("https://api.mokahr.com/api-platform/v1/jobs-groupedby-zhineng/mihoyo?mode=social&siteId=42280")
 //   jobsList.value = data.value
