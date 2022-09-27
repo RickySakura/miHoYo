@@ -59,7 +59,7 @@
         <div class="more-btn" @click="goTo('https://jobs.mihoyo.com/#/jobs')">全部职位</div>
       </div>
       <div class="join-weal home-join-container none">
-        <div class="join-weal-card" v-for="(item, index) in $attrs['values-res'].list" :key="index"
+        <div class="join-weal-card" v-for="(item, index) in valuesRes" :key="index"
           :class="{ hasContent: hasContent(item) }">
           <div class="join-weal-card__number" :style="`background-image: url(${item.bg})`"></div>
           <div class="weal-btn" v-if="hasContent(item)">
@@ -92,7 +92,15 @@
 
 <script setup>
 const page = "join";
-const props = defineProps(["jobsList"])
+// const props = defineProps(["jobsList", "valuesRes"])
+const props = defineProps({
+  jobsList: {
+    default: []
+  },
+  valuesRes: {
+    default: []
+  }
+})
 let ready = ref(false)
 let localText = ref(null)
 

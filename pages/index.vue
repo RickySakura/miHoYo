@@ -27,6 +27,7 @@
 </template>
 
 <script setup>
+import { getHeaderLinks, getMihoyoData } from '/assets/js/api.js'
 definePageMeta({
   layout: false,
 });
@@ -39,18 +40,20 @@ let valuesRes = ref(null);  // join页面数据
 let jobslist = ref({})
 let newsRes = ref(null)// news页面数据
 onMounted(async () => {
-  const { data: res , pending } = await useFetch("/data/mihoyo.json")
+  // const { data: res } = await useFetch("/data/mihoyo.json")
+  let { data: jobs } = await useFetch("https://api.mokahr.com/api-platform/v1/jobs-groupedby-zhineng/mihoyo?mode=social&siteId=42280")
+  // const { data } = await useFetch("/data/headerlinks.json"); // 生产环境
+  const res = getMihoyoData()
+  const data = getHeaderLinks()
+
   useState("localText").value = res.value.localText
-  let { data:jobs } = await useFetch("https://api.mokahr.com/api-platform/v1/jobs-groupedby-zhineng/mihoyo?mode=social&siteId=42280")
-  const { data } = await useFetch("/data/headerlinks.json"); // 生产环境
 
-
-  data.value.forEach((item) => {
+  data.forEach((item) => {
     links.value.push(item.title);
     paths.value.push(item.path);
   });
-  
-  valuesRes.value = res.value.valuesRes
+
+  valuesRes.value = res.value.valuesRes.list
   jobslist.value = jobs.value
 
   newsRes.value = res.value.newsRes.list

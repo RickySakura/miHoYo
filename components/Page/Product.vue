@@ -7,6 +7,7 @@
 
 <script>
 import axios from "axios";
+import { getBannerInfo } from '/assets/js/api.js'
 export default {
   data() {
     return {
@@ -26,13 +27,12 @@ export default {
     },
   },
   async mounted() {
-    // const { data } = await axios.get('/assets/bannerinfo.json')
-    const { data } = await axios.get("/data/bannerinfo.json");
-    // const { data } = await axios.get('https://vkceyugu.cdn.bspapp.com/VKCEYUGU-b02b7f48-0227-438f-8c3a-3a5f94afa017/e8181bf0-3635-47c4-bd94-110464e2cb5a.json')
-    this.datasets = data;
+    // const { data } = await axios.get("/data/bannerinfo.json");
+    // this.datasets = data;
+    this.datasets = getBannerInfo()
   },
   unmounted() {
-    console.log("unm");
+    console.log("unmounted");
   },
 };
 </script>
