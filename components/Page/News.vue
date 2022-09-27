@@ -1,9 +1,9 @@
 <template>
   <div :class="'home-' + page" @wheel="wheel" @mousemove="bgAct">
+    <img src="/img/decoration.7a97c88.png" alt="" class="aside-decoration" />
     <div class="swiper-container last-swiper ">
       <div class="swiper-wrapper">
         <div class="swiper-slide content-slide">
-          <img src="/img/decoration.7a97c88.png" alt="" class="aside-decoration" />
           <div class="home-news__wrap">
             <div class="home-news-center">
               <div class="home-news__content">
