@@ -97,7 +97,6 @@ function routeMatch(speed = 0) {
   } else {
     for (let i in mySwiper.slides) {
       let { className } = mySwiper.slides[i].children[0];
-      // console.log(className);
       if (className.indexOf(query.page) !== -1) {
         mySwiper.slideTo(i, speed);
         break;
@@ -113,7 +112,6 @@ let asideImg = ref(true);
 onMounted(() => {
   const swiper = init();
   routeMatch();
-  console.log("mount");
   // vue3 setup中监听器使用watch函数，监听路由中 query的变化
   watch(
     () => useRoute().query,

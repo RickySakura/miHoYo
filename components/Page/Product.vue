@@ -31,9 +31,6 @@ export default {
     // this.datasets = data;
     this.datasets = getBannerInfo()
   },
-  unmounted() {
-    console.log("unmounted");
-  },
 };
 </script>
 

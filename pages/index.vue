@@ -98,13 +98,13 @@ watch(
 // 全局的淡入淡出方法，在页面上消除渲染的方法，一般用于到主页的过渡
 let useFaded = useState("useFaded");
 useFaded.value = function (className, isRender) {
-  isRender.value = false;
+  // isRender.value = false;
   let current_page = useRoute().query.page;
   function isNotIndexPage(p) {
-    if (p != undefined) {
-      return true;
-    } else {
+    if (p == undefined || p == '' || p == 'product') {
       return false;
+    } else {
+      return true;
     }
   }
   isRender.value = isNotIndexPage(current_page);
@@ -114,8 +114,12 @@ useFaded.value = function (className, isRender) {
     (nextPage) => {
       if (!isNotIndexPage(nextPage)) {
         let e = document.getElementsByClassName(className)[0];
-        e.classList.add("fade-leave-active");
-        e.classList.add("fade-leave-to");
+        try {
+          e.classList.add("fade-leave-active");
+          e.classList.add("fade-leave-to");
+        } catch (error) {
+
+        }
         setTimeout(() => {
           isRender.value = isNotIndexPage(nextPage);
         }, 400);
@@ -123,17 +127,18 @@ useFaded.value = function (className, isRender) {
         new Promise((resolve, reject) => {
           isRender.value = isNotIndexPage(nextPage); // 因为 ref 对象的修改是一个异步操作，所以为了正确的获取 DOM 元素，需要用Promise包装一下
           resolve("");
-        }).then((res) => {
-          let e = document.getElementsByClassName(className)[0];
-          e.classList.add("fade-enter-active");
-          e.classList.add("fade-enter-to");
-          setTimeout(() => {
-            e.classList.remove("fade-enter-to");
-          }, 40);
-          setTimeout(() => {
-            e.classList.remove("fade-enter-active");
-          }, 200);
-        });
+        })
+        // .then((res) => {
+        //   let e = document.getElementsByClassName(className)[0];
+        //   e.classList.add("fade-enter-active");
+        //   e.classList.add("fade-enter-to");
+        //   setTimeout(() => {
+        //     e.classList.remove("fade-enter-to");
+        //   }, 40);
+        //   setTimeout(() => {
+        //     e.classList.remove("fade-enter-active");
+        //   }, 200);
+        // });
       }
     }
   );
