@@ -41,8 +41,9 @@ let jobslist = ref({})
 let newsRes = ref(null)// news页面数据
 onMounted(async () => {
   // 手动媒体查询，在每一次窗口resize后都修改一次 html 的font-size
+  let fontSize = (window.innerHeight + 1.77983) / 10.82
   if (fontSize >= 60) {
-    document.getElementsByTagName('html')[0].style.fontSize = `${(window.innerHeight + 1.77983) / 10.82}px`
+    document.getElementsByTagName('html')[0].style.fontSize = `${fontSize}px`
   }
 
   window.addEventListener('resize', ({ target }) => {
