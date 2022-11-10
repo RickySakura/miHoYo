@@ -20,18 +20,18 @@
           <div class="mibanner__info">
             <div class="mibanner__info-name">
               <img v-if="item.name.img" :src="item.name.img" alt class="mibanner__info-name-img" />
-              <div v-else style="font-weight: bold">{{  item.name.cnname  }}</div>
-              <span class="enname anim">{{  item.name.enname  }}</span>
+              <div v-else style="font-weight: bold">{{ item.name.cnname }}</div>
+              <span class="enname anim">{{ item.name.enname }}</span>
             </div>
             <div class="mibanner__info-slash"></div>
             <div class="mibanner__info-desc">
-              <p v-for="desc in item.desc">{{  desc  }}</p>
+              <p v-for="desc in item.desc">{{ desc }}</p>
             </div>
             <div class="mibanner__info-socials" v-if="item.socials || item.socials.length > 0">
               <div v-for="(social, index) in item.socials" @click="goblank(datasets[activeIndex].socials[index].href)"
                 class="mibanner__info-social">
                 <span>
-                  {{  social.title  }}
+                  {{ social.title }}
                   <div class="mibanner__info-social-qrcode" v-if="social.qrcode">
                     <img :src="social.qrcode" alt="miHoYo" />
                   </div>

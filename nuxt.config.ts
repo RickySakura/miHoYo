@@ -24,5 +24,4 @@ export default defineNuxtConfig({
     prerender: { crawlLinks: false, routes: [] }
   },
   asyncEntry: true,
-
 })

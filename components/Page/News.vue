@@ -93,7 +93,7 @@ export default {
   computed: {
     viewHref() {
       return 'https://www.mihoyo.com/news/' + this.newsRes[this.navIndex].id
-    }
+    },
   },
   props: {
     newsRes: Object
@@ -108,19 +108,23 @@ export default {
     },
     bgAct(e) {
       document.querySelector(".home-news__content .swiper-slide-active .home-news-view__banner-bg-img").style.transform = `translate(${(-39.35 / window.innerWidth) * e.pageX + 20}px,${(-20.46 / window.innerHeight) * e.pageY + 9.36}px)`
+    },
+    initLastSwiper() {
+      this.swiper = new Swiper(".last-swiper", {
+        direction: "vertical",
+        watchSlidesProgress: true,
+        slidesPerView: 'auto',
+        observer: true, // 修改swiper自己或子元素时，自动初始化swiper,也就是响应式
+        observeParents: true, // 修改swiper的父元素时，自动初始化swiper
+        mousewheel: true,
+        height: window.innerHeight,
+        updateOnWindowResiz: true,
+      })
     }
   },
   mounted() {
-    this.swiper = new Swiper(".last-swiper", {
-      direction: "vertical",
-      // freeMode: true,
-      watchSlidesProgress: true,
-      slidesPerView: 'auto',
-      observer: true, // 修改swiper自己或子元素时，自动初始化swiper,也就是响应式
-      observeParents: true, // 修改swiper的父元素时，自动初始化swiper
-      mousewheel: true,
-      height: window.innerHeight,
-    })
+
+    this.initLastSwiper()
     this.contentSwiper = new Swiper(".home-news__content", {
       observer: true, // 修改swiper自己或子元素时，自动初始化swiper,也就是响应式
       observeParents: true, // 修改swiper的父元素时，自动初始化swiper
@@ -138,6 +142,10 @@ export default {
     setTimeout(() => {
       useState("pageShow").value = true
     }, 10)
+    window.addEventListener('resize', () => {
+      this.swiper.destroy(true, true)
+      this.initLastSwiper()
+    })
   }
 }
 </script>
@@ -153,7 +161,8 @@ export default {
   height: 100%;
 
   .content-slide:first-child {
-    height: 748px
+    // height: 748px
+    height: 10.8rem
   }
 }
 

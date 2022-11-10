@@ -61,6 +61,15 @@ onMounted(async () => {
   setTimeout(() => {
     document.querySelector(".view").classList.remove("hide")
   }, 8)
+
+  // 手动媒体查询，在每一次窗口resize后都修改一次 html 的font-size
+  window.addEventListener('resize', ({ target }) => {
+    // 窗口高度，与 html 的font-szie有函数关系： fontSize = (height+1.77983) / 10.82
+    let fontSize = (target.innerHeight + 1.77983) / 10.82
+    if (fontSize >= 60) {
+      document.getElementsByTagName('html')[0].style.fontSize = `${fontSize}px`
+    }
+  })
 });
 
 // 点击头部导航栏链接后切换路由
@@ -128,21 +137,11 @@ useFaded.value = function (className, isRender) {
           isRender.value = isNotIndexPage(nextPage); // 因为 ref 对象的修改是一个异步操作，所以为了正确的获取 DOM 元素，需要用Promise包装一下
           resolve("");
         })
-        // .then((res) => {
-        //   let e = document.getElementsByClassName(className)[0];
-        //   e.classList.add("fade-enter-active");
-        //   e.classList.add("fade-enter-to");
-        //   setTimeout(() => {
-        //     e.classList.remove("fade-enter-to");
-        //   }, 40);
-        //   setTimeout(() => {
-        //     e.classList.remove("fade-enter-active");
-        //   }, 200);
-        // });
       }
     }
   );
 };
+
 </script>
 
 <style lang="less" scoped>
@@ -150,8 +149,6 @@ useFaded.value = function (className, isRender) {
   position: relative;
   width: 100%;
   background: #f8f9fb url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAAAAXNSR0IArs4c6QAAAFVJREFUSEtjfPn+238GJMDBxozMJZn949dfuB5GkOHiglyMJJtChIYhbPjHrz//83Oz0yZYRg3HlngYR4NlNFiIKFUgSkZTC9agGg0W7MEyWs1hCxcAF5pe5Ya82ZoAAAAASUVORK5CYII=) repeat center center/0.23rem 0.23rem;
-  // min-width: 100%;
-  // min-height: 100%;
 }
 
 .hide {
