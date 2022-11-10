@@ -40,6 +40,20 @@ let valuesRes = ref(null);  // join页面数据
 let jobslist = ref({})
 let newsRes = ref(null)// news页面数据
 onMounted(async () => {
+  // 手动媒体查询，在每一次窗口resize后都修改一次 html 的font-size
+  if (fontSize >= 60) {
+    document.getElementsByTagName('html')[0].style.fontSize = `${(window.innerHeight + 1.77983) / 10.82}px`
+  }
+
+  window.addEventListener('resize', ({ target }) => {
+    // 窗口高度，与 html 的font-szie有函数关系： fontSize = (height+1.77983) / 10.82
+    let fontSize = (target.innerHeight + 1.77983) / 10.82
+    if (fontSize >= 60) {
+      document.getElementsByTagName('html')[0].style.fontSize = `${fontSize}px`
+    }
+  })
+
+
   // const { data: res } = await useFetch("/data/mihoyo.json")
   let { data: jobs } = await useFetch("https://api.mokahr.com/api-platform/v1/jobs-groupedby-zhineng/mihoyo?mode=social&siteId=42280")
   // const { data } = await useFetch("/data/headerlinks.json"); // 生产环境
@@ -62,14 +76,7 @@ onMounted(async () => {
     document.querySelector(".view").classList.remove("hide")
   }, 8)
 
-  // 手动媒体查询，在每一次窗口resize后都修改一次 html 的font-size
-  window.addEventListener('resize', ({ target }) => {
-    // 窗口高度，与 html 的font-szie有函数关系： fontSize = (height+1.77983) / 10.82
-    let fontSize = (target.innerHeight + 1.77983) / 10.82
-    if (fontSize >= 60) {
-      document.getElementsByTagName('html')[0].style.fontSize = `${fontSize}px`
-    }
-  })
+
 });
 
 // 点击头部导航栏链接后切换路由
